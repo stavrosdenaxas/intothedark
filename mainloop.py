@@ -11,6 +11,8 @@ clock = pygame.time.Clock()
 screen_width = 1920
 screen_height = 1080
 
+
+
 # Set up the drawing window
 screen = pygame.display.set_mode([screen_width, screen_height])
 
