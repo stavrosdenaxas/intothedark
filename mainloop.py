@@ -8,8 +8,9 @@ class character(pygame.sprite.Sprite):
         super.__init__()
 
 pygame.init()
-
 clock = pygame.time.Clock()
+
+# set resolution variables
 screen_width = 1920
 screen_height = 1080
 
