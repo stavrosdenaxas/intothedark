@@ -1,5 +1,6 @@
 import pygame
 import pygame.freetype
+import character
 
 
 class Gamestate:
@@ -12,6 +13,7 @@ class Gamestate:
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 96)
+        self.mainCharacter = character.Character()
 
     def title_screen(self):
         # Did the user click the window close button?
@@ -83,6 +85,6 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
 
         # Draw a solid blue circle in the center
-
+        self.mainCharacter.draw_character(self.screen)
         # Flip the display
         pygame.display.flip()
