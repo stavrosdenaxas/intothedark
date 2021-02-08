@@ -58,10 +58,6 @@ class Gamestate:
                                   round(self.screen_height * 0.7 - 0.1 * self.screen_width)),
                                  "Credits",
                                  (50, 50, 50))
-
-
-
-
         # Flip the display
         pygame.display.flip()
 
@@ -87,7 +83,6 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
 
         # Draw a solid blue circle in the center
-        pygame.draw.circle(self.screen, (0, 0, 255), (250, 250), 75)
 
         # Flip the display
         pygame.display.flip()
