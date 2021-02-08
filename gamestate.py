@@ -11,6 +11,7 @@ class Gamestate:
         self.screen = pygame.display.set_mode([self.screen_width, self.screen_height])
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 128)
+        self.MENU_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 96)
 
     def title_screen(self):
         # Did the user click the window close button?
@@ -42,10 +43,39 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
 
         # Draw a solid blue circle in the center
-        pygame.draw.circle(self.screen, (0, 0, 255), (500, 500), 75)
+        self.MENU_FONT.render_to(self.screen,
+                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
+                                  round(self.screen_height * 0.4 - 0.1 * self.screen_width)),
+                                 "Enter the Darkness",
+                                 (50, 50, 50))
+        self.MENU_FONT.render_to(self.screen,
+                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
+                                  round(self.screen_height * 0.55 - 0.1 * self.screen_width)),
+                                 "Options",
+                                 (50, 50, 50))
+        self.MENU_FONT.render_to(self.screen,
+                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
+                                  round(self.screen_height * 0.7 - 0.1 * self.screen_width)),
+                                 "Credits",
+                                 (50, 50, 50))
+
+
+
 
         # Flip the display
         pygame.display.flip()
+
+    def menu_options(self):
+        # placeholder
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+
+    def menu_credits(self):
+        # placeholder
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
 
     def main_game(self):
         # Did the user click the window close button?
@@ -54,6 +84,7 @@ class Gamestate:
                 self.running = False
         # Fill the background with white
         # screen.fill((255, 255, 255))
+        self.screen.fill((0, 0, 0))
 
         # Draw a solid blue circle in the center
         pygame.draw.circle(self.screen, (0, 0, 255), (250, 250), 75)
