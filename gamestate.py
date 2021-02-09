@@ -19,12 +19,7 @@ class Gamestate:
     def title_screen(self):
         # Did the user click the window close button?
         inputcapture.next_screen_check_input(self)
-
-        # for event in pygame.event.get():
-        #   if event.type == pygame.QUIT:
-        #        self.running = False
-        #    if event.type == pygame.KEYDOWN:
-        #        self.state = "main_menu"
+        inputcapture.quit_check_input(self)
 
         # Fill the background with white
         self.screen.fill((0, 0, 0))
@@ -38,11 +33,8 @@ class Gamestate:
 
     def main_menu(self):
         # Did the user click the window close button?
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-            if event.type == pygame.KEYDOWN:
-                self.state = "main_game"
+        inputcapture.next_screen_check_input(self)
+        inputcapture.quit_check_input(self)
 
         # Fill the background with white
         self.screen.fill((0, 0, 0))
@@ -68,26 +60,22 @@ class Gamestate:
 
     def menu_options(self):
         # placeholder
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
+        inputcapture.quit_check_input(self)
 
     def menu_credits(self):
         # placeholder
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
+        inputcapture.quit_check_input(self)
 
     def main_game(self):
         # Did the user click the window close button?
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
+        inputcapture.quit_check_input(self)
+
         # Fill the background with white
         # screen.fill((255, 255, 255))
         self.screen.fill((0, 0, 0))
 
         # Draw a solid blue circle in the center
         self.mainCharacter.draw_character(self.screen)
+
         # Flip the display
         pygame.display.flip()

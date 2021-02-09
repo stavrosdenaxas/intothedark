@@ -13,3 +13,8 @@ def next_screen_check_input(gamestate):
                 gamestate.state = 'main_menu'
             elif gamestate.state == 'main_menu':
                 gamestate.state = 'main_game'
+
+def quit_check_input(gamestate):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            gamestate.running = False
