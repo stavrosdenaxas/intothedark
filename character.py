@@ -1,5 +1,6 @@
 import pygame
 
+
 class Character(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -9,22 +10,31 @@ class Character(pygame.sprite.Sprite):
                               pygame.image.load("Sprites/MainCharacter/CharTest4.png"),
                               pygame.image.load("Sprites/MainCharacter/CharTest5.png"),
                               pygame.image.load("Sprites/MainCharacter/CharTest6.png")]
-        self.positionX = 200
-        self.positionY = 200
+
         self.velocityX = 0
         self.velocityY = 0
+
         self.all_sprites = pygame.sprite.Group()
         self.image = self.charAnimation[0]
         self.all_sprites.add(self)
         self.rect = self.image.get_rect()
-        self.rect.x = 100
-        self.rect.y = 100
+        self.rect.x = 300
+        self.rect.y = 300
 
     def draw_character(self, screen):
         self.all_sprites.draw(screen)
         return "done"
 
-    def move(self):
-        self.velocityX += 1
-        self.velocityY += 1
-        return "done"
+    def move(self, mouse_position):
+        # mousePos[0]
+        # mousePos[1]
+        print(mouse_position[0] )
+        if self.rect.x - mouse_position[0] < 0:
+            self.rect.x += 5
+        if self.rect.x - mouse_position[0] > 0:
+            self.rect.x -= 5
+
+        if self.rect.y - mouse_position[1] < 0:
+            self.rect.y += 5
+        if self.rect.y - mouse_position[1] > 0:
+            self.rect.y -= 5

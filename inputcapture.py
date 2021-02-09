@@ -1,8 +1,9 @@
 import pygame
 
 
-def main_game_check_input(character):
-    # placeholder
+def character_check_input(character):
+    # probably need to pass character as input to update when needed
+    character.move(pygame.mouse.get_pos())
     return "placeholder"
 
 
@@ -13,6 +14,7 @@ def next_screen_check_input(gamestate):
                 gamestate.state = 'main_menu'
             elif gamestate.state == 'main_menu':
                 gamestate.state = 'main_game'
+
 
 def quit_check_input(gamestate):
     for event in pygame.event.get():
