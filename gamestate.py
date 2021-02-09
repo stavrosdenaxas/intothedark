@@ -12,8 +12,8 @@ class Gamestate:
         self.screen_height = 1080
         self.screen = pygame.display.set_mode([self.screen_width, self.screen_height])
         self.running = True
-        self.GAME_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 128)
-        self.MENU_FONT = pygame.freetype.Font("Fonts/Oswald-Bold.ttf", 96)
+        self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
+        self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
         self.mainCharacter = character.Character()
 
     def title_screen(self):
