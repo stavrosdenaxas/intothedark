@@ -1,7 +1,6 @@
 import pygame
 import gamestate
 
-
 #Initial Game Setup
 pygame.init()
 clock = pygame.time.Clock()
@@ -17,6 +16,7 @@ while game_state.running:
         game_state.main_menu()
     if game_state.state == 'main_game':
         game_state.main_game()
+
     clock.tick(60)
 
 # Done! Time to quit.

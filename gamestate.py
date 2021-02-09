@@ -1,6 +1,7 @@
 import pygame
 import pygame.freetype
 import character
+import inputcapture
 
 
 class Gamestate:
@@ -17,11 +18,13 @@ class Gamestate:
 
     def title_screen(self):
         # Did the user click the window close button?
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-            if event.type == pygame.KEYDOWN:
-                self.state = "main_menu"
+        inputcapture.next_screen_check_input(self)
+
+        # for event in pygame.event.get():
+        #   if event.type == pygame.QUIT:
+        #        self.running = False
+        #    if event.type == pygame.KEYDOWN:
+        #        self.state = "main_menu"
 
         # Fill the background with white
         self.screen.fill((0, 0, 0))
