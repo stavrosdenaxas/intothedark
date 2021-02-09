@@ -26,9 +26,6 @@ class Character(pygame.sprite.Sprite):
         return "done"
 
     def move(self, mouse_position):
-        # mousePos[0]
-        # mousePos[1]
-        print(mouse_position[0] )
         if self.rect.x - mouse_position[0] < 0:
             self.rect.x += 5
         if self.rect.x - mouse_position[0] > 0:
