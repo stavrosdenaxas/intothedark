@@ -18,7 +18,7 @@ class Gamestate:
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
-        self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 8)
+        self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 12)
 
         self.all_sprites = pygame.sprite.Group()
         self.bonzai_tree1 = flora.Flora()
@@ -100,6 +100,6 @@ class Gamestate:
         self.bonzai_tree3.animate()
 
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
-        # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,20), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
+        # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,30), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
         # Flip the display ( update the display)
         pygame.display.flip()
