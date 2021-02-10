@@ -81,7 +81,7 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
         inputcapture.character_check_input(self.mainCharacter)
         # Draw a solid blue circle in the center
-
+        self.mainCharacter.move()
         self.all_sprites.draw(self.screen)
 
 

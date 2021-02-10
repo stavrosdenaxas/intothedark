@@ -2,8 +2,13 @@ import pygame
 
 
 def character_check_input(character):
-    # probably need to pass character as input to update when needed
-    character.move(pygame.mouse.get_pos())
+    if pygame.mouse.get_pressed(3)[0]:
+        character.mouse_position = pygame.mouse.get_pos()
+        print(pygame.mouse.get_pos())
+        print(character.mouse_position)
+        character.is_moving = True
+
+
     return "placeholder"
 
 
