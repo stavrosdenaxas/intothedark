@@ -9,9 +9,6 @@ def character_check_input(character):
         character.is_moving = True
 
 
-    return "placeholder"
-
-
 def next_screen_check_input(gamestate):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
