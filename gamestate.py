@@ -1,25 +1,31 @@
 import pygame
 import pygame.freetype
 import character
+import flora
 import inputcapture
+
+
+screen_width = 1920
+screen_height = 1080
 
 
 class Gamestate:
     def __init__(self):
         self.state = 'title_screen'
         # set resolution variables
-        self.screen_width = 1920
-        self.screen_height = 1080
-        self.screen = pygame.display.set_mode([self.screen_width, self.screen_height])
+
+        self.screen = pygame.display.set_mode([screen_width, screen_height])
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
 
         self.all_sprites = pygame.sprite.Group()
-
+        self.bonzai_tree = flora.Flora()
         self.mainCharacter = character.Character()
 
+        # ADD BONZAI TREE AS TEST
 
+        self.all_sprites.add(self.bonzai_tree)
         self.all_sprites.add(self.mainCharacter)
 
     def title_screen(self):
@@ -30,8 +36,8 @@ class Gamestate:
         # Fill the background with white
         self.screen.fill((0, 0, 0))
         self.GAME_FONT.render_to(self.screen,
-                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
-                                  round(self.screen_height / 2 - 0.1 * self.screen_width)),
+                                 (round(screen_width / 2 - 0.2 * screen_width),
+                                  round(screen_height / 2 - 0.1 * screen_width)),
                                  "Into the Dark",
                                  (50, 50, 50))
         # Draw a solid blue circle in the center
@@ -47,18 +53,18 @@ class Gamestate:
 
         # Draw a solid blue circle in the center
         self.MENU_FONT.render_to(self.screen,
-                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
-                                  round(self.screen_height * 0.4 - 0.1 * self.screen_width)),
+                                 (round(screen_width / 2 - 0.2 * screen_width),
+                                  round(screen_height * 0.4 - 0.1 * screen_width)),
                                  "Enter the Darkness",
                                  (50, 50, 50))
         self.MENU_FONT.render_to(self.screen,
-                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
-                                  round(self.screen_height * 0.55 - 0.1 * self.screen_width)),
+                                 (round(screen_width / 2 - 0.2 * screen_width),
+                                  round(screen_height * 0.55 - 0.1 * screen_width)),
                                  "Options",
                                  (50, 50, 50))
         self.MENU_FONT.render_to(self.screen,
-                                 (round(self.screen_width / 2 - 0.2 * self.screen_width),
-                                  round(self.screen_height * 0.7 - 0.1 * self.screen_width)),
+                                 (round(screen_width / 2 - 0.2 * screen_width),
+                                  round(screen_height * 0.7 - 0.1 * screen_width)),
                                  "Credits",
                                  (50, 50, 50))
         # Flip the display
@@ -83,7 +89,7 @@ class Gamestate:
         # Draw a solid blue circle in the center
         self.mainCharacter.move()
         self.all_sprites.draw(self.screen)
-
+        self.bonzai_tree.animate()
 
         # Flip the display
         pygame.display.flip()

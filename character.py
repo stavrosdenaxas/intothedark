@@ -11,7 +11,6 @@ class Character(pygame.sprite.Sprite):
                               pygame.image.load("Assets/Sprites/MainCharacter/CharTest4.png"),
                               pygame.image.load("Assets/Sprites/MainCharacter/CharTest5.png"),
                               pygame.image.load("Assets/Sprites/MainCharacter/CharTest6.png")]
-
         self.velocityX = 0
         self.velocityY = 0
         self.current_sprite = 0
@@ -31,13 +30,17 @@ class Character(pygame.sprite.Sprite):
 
         if self.is_moving:
             if self.rect.x - self.mouse_position[0] < - self.image.get_size()[0]:
-                self.rect.x += random.randint(-1, 7)
+                self.rect.x += random.randint(-1, 5)
+                self.rect.y += random.randint(-1, 1)
             if self.rect.x - self.mouse_position[0] > - self.image.get_size()[0]:
-                self.rect.x -= random.randint(-1, 7)
+                self.rect.x -= random.randint(-1, 5)
+                self.rect.y += random.randint(-1, 1)
             if self.rect.y - self.mouse_position[1] < - self.image.get_size()[1]:
-                self.rect.y += random.randint(-1, 7)
+                self.rect.y += random.randint(-1, 5)
+                self.rect.x -= random.randint(-1, 1)
             if self.rect.y - self.mouse_position[1] > - self.image.get_size()[1]:
-                self.rect.y -= random.randint(-1, 7)
+                self.rect.y -= random.randint(-1, 5)
+                self.rect.x -= random.randint(-1, 1)
 
         if self.is_moving:
             self.current_sprite += 0.3

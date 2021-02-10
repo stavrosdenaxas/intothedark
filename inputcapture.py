@@ -2,7 +2,7 @@ import pygame
 
 
 def character_check_input(character):
-    if pygame.mouse.get_pressed(3)[0]:
+    if pygame.mouse.get_pressed(3)[2]:
         character.mouse_position = pygame.mouse.get_pos()
         print(pygame.mouse.get_pos())
         print(character.mouse_position)
