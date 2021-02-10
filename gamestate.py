@@ -16,7 +16,7 @@ class Gamestate:
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
 
         self.all_sprites = pygame.sprite.Group()
-        
+
         self.mainCharacter = character.Character()
 
 
