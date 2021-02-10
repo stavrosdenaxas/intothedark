@@ -20,12 +20,14 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 600
         self.rect.y = 600
+        self.inventory = [1]
 
         self.is_moving = False
 
     def move(self):
 
-        if abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[0]) > 3 or abs(self.rect.x - self.mouse_position[0] + self.image.get_size()[1]) > 3:
+        if abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[0]) > 3 or\
+                abs(self.rect.x - self.mouse_position[0] + self.image.get_size()[1]) > 3:
             self.is_moving = True
 
         if self.is_moving:
@@ -52,3 +54,8 @@ class Character(pygame.sprite.Sprite):
                 abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[1]) < 3:
             self.is_moving = False
             self.current_sprite = 0
+
+    def add_item(self, item):
+        # placeholder
+        self.inventory[0] = item
+        return "placeholder"
