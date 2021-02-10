@@ -18,6 +18,7 @@ class Gamestate:
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
+        self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 8)
 
         self.all_sprites = pygame.sprite.Group()
         self.bonzai_tree1 = flora.Flora()
@@ -26,7 +27,6 @@ class Gamestate:
         self.mainCharacter = character.Character()
 
         # ADD BONZAI TREE AS TEST
-
 
         self.all_sprites.add(self.mainCharacter)
         self.all_sprites.add(self.bonzai_tree1)
@@ -83,7 +83,8 @@ class Gamestate:
         # placeholder
         inputcapture.quit_check_input(self)
 
-    def main_game(self):
+    def main_game(self, clock):
+
         # Did the user click the window close button?
         inputcapture.quit_check_input(self)
 
@@ -97,5 +98,8 @@ class Gamestate:
         self.bonzai_tree1.animate()
         self.bonzai_tree2.animate()
         self.bonzai_tree3.animate()
-        # Flip the display
+
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
+        # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,20), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
+        # Flip the display ( update the display)
         pygame.display.flip()
