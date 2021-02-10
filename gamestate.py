@@ -14,7 +14,13 @@ class Gamestate:
         self.running = True
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
+
+        self.all_sprites = pygame.sprite.Group()
+        
         self.mainCharacter = character.Character()
+
+
+        self.all_sprites.add(self.mainCharacter)
 
     def title_screen(self):
         # Did the user click the window close button?
@@ -75,7 +81,9 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
         inputcapture.character_check_input(self.mainCharacter)
         # Draw a solid blue circle in the center
-        self.mainCharacter.draw_character(self.screen)
+
+        self.all_sprites.draw(self.screen)
+
 
         # Flip the display
         pygame.display.flip()

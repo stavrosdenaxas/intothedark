@@ -14,11 +14,8 @@ class Character(pygame.sprite.Sprite):
 
         self.velocityX = 0
         self.velocityY = 0
-
-        self.all_sprites = pygame.sprite.Group()
         self.current_sprite = 0
         self.image = self.charAnimation[self.current_sprite]
-        self.all_sprites.add(self)
         self.rect = self.image.get_rect()
 
         self.rect.x = 300
@@ -26,8 +23,7 @@ class Character(pygame.sprite.Sprite):
 
         self.is_moving = False
 
-    def draw_character(self, screen):
-        self.all_sprites.draw(screen)
+
 
     def move(self, mouse_position):
 
