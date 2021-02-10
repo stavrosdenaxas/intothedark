@@ -14,6 +14,7 @@ class Flora(pygame.sprite.Sprite):
         self.velocityY = 0
         self.current_sprite = 0
         self.scale_factor = 0.5
+        # test comment
         self.image = self.treeAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(100,500)
