@@ -15,11 +15,11 @@ class Character(pygame.sprite.Sprite):
         self.velocityY = 0
         self.current_sprite = 0
         self.scale_factor = 0.5
-        self.mouse_position = [random.randint(100,500), random.randint(100,500)]
+        self.mouse_position = [random.randint(100, 500), random.randint(100, 500)]
         self.image = self.charAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(100,500)
-        self.rect.y = random.randint(100,500)
+        self.rect.x = random.randint(100, 500)
+        self.rect.y = random.randint(100, 500)
         self.inventory = [1]
 
         self.is_moving = False
@@ -55,7 +55,8 @@ class Character(pygame.sprite.Sprite):
             self.is_moving = False
             self.current_sprite = 0
 
+    # placeholder method for inventory
     def add_item(self, item):
-        # placeholder
+
         self.inventory[0] = item
         return "placeholder"
