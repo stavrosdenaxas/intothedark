@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 class Flora(pygame.sprite.Sprite):
@@ -15,13 +16,13 @@ class Flora(pygame.sprite.Sprite):
         self.scale_factor = 0.5
         self.image = self.treeAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = 750
-        self.rect.y = 500
-
+        self.rect.x = random.randint(100,500)
+        self.rect.y = random.randint(100,500)
+        self.growth_factor = random.randint(100,1000)/10000
         self.is_moving = False
 
     def animate(self):
-        self.current_sprite += 0.01
+        self.current_sprite += self.growth_factor
         if self.current_sprite >= len(self.treeAnimation):
             self.current_sprite = 0
         self.image = self.treeAnimation[int(self.current_sprite)]

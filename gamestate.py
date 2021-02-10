@@ -20,13 +20,18 @@ class Gamestate:
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
 
         self.all_sprites = pygame.sprite.Group()
-        self.bonzai_tree = flora.Flora()
+        self.bonzai_tree1 = flora.Flora()
+        self.bonzai_tree2 = flora.Flora()
+        self.bonzai_tree3 = flora.Flora()
         self.mainCharacter = character.Character()
 
         # ADD BONZAI TREE AS TEST
 
-        self.all_sprites.add(self.bonzai_tree)
+
         self.all_sprites.add(self.mainCharacter)
+        self.all_sprites.add(self.bonzai_tree1)
+        self.all_sprites.add(self.bonzai_tree2)
+        self.all_sprites.add(self.bonzai_tree3)
 
     def title_screen(self):
         # Did the user click the window close button?
@@ -89,7 +94,8 @@ class Gamestate:
         # Draw a solid blue circle in the center
         self.mainCharacter.move()
         self.all_sprites.draw(self.screen)
-        self.bonzai_tree.animate()
-
+        self.bonzai_tree1.animate()
+        self.bonzai_tree2.animate()
+        self.bonzai_tree3.animate()
         # Flip the display
         pygame.display.flip()
