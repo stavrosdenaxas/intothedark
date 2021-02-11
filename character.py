@@ -5,12 +5,12 @@ import random
 class Character(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.charAnimation = [pygame.image.load("Assets/Sprites/MainCharacter/CharTest1.png"),
-                              pygame.image.load("Assets/Sprites/MainCharacter/CharTest2.png"),
-                              pygame.image.load("Assets/Sprites/MainCharacter/CharTest3.png"),
-                              pygame.image.load("Assets/Sprites/MainCharacter/CharTest4.png"),
-                              pygame.image.load("Assets/Sprites/MainCharacter/CharTest5.png"),
-                              pygame.image.load("Assets/Sprites/MainCharacter/CharTest6.png")]
+        self.charAnimation = [pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard1.png"),
+                              pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard2.png"),
+                              pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard3.png"),
+                              pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard4.png"),
+                              pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard5.png"),
+                              pygame.image.load("Assets/Sprites/MainCharacter/CharTestWizard6.png")]
         self.velocityX = 0
         self.velocityY = 0
         self.current_sprite = 0
