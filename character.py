@@ -22,8 +22,7 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(100, 500)
         self.rect.y = random.randint(100, 500)
-        self.position.x = self.rect.x
-        self.position.y = self.rect.y
+        self.position = self.rect.center
         self.inventory = [1]
         self.is_moving = False
 
@@ -57,8 +56,7 @@ class Character(pygame.sprite.Sprite):
                 abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[1]) < 3:
             self.is_moving = False
             self.current_sprite = 0
-        self.position.x = self.rect.x
-        self.position.y = self.rect.y
+        self.position = self.rect.center
 
     # placeholder method for inventory
     def add_item(self, item):

@@ -104,7 +104,8 @@ class Gamestate:
                 obj.animate()
             if isinstance(obj, projectile.Projectile):
                 obj.move()
-                self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "FPS:" + str(obj.position), (150, 150, 150))
+
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 70), "Len:" + str(len(all_sprites)), (150, 150, 150))
 
         # draw all sprites
         all_sprites.draw(self.screen)
