@@ -26,36 +26,48 @@ class Character(pygame.sprite.Sprite):
         self.inventory = [1]
         self.is_moving = False
 
+
+
+    def move_keyboard(self, move):
+        self.position += move * 3
+        self.rect.center = self.position
+        if self.is_moving:
+            self.current_sprite += 0.3
+        if self.current_sprite >= len(self.assetAnimation):
+            self.current_sprite = 0
+        self.image = self.assetAnimation[int(self.current_sprite)]
+
+
     def move(self):
 
         if abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[0]) > 3 or\
                 abs(self.rect.x - self.mouse_position[0] + self.image.get_size()[1]) > 3:
             self.is_moving = True
 
-        if self.is_moving:
-            if self.rect.x - self.mouse_position[0] < - self.image.get_size()[0]:
-                self.rect.x += random.randint(-1, 5)
-                self.rect.y += random.randint(-1, 1)
-            if self.rect.x - self.mouse_position[0] > - self.image.get_size()[0]:
-                self.rect.x -= random.randint(-1, 5)
-                self.rect.y += random.randint(-1, 1)
-            if self.rect.y - self.mouse_position[1] < - self.image.get_size()[1]:
-                self.rect.y += random.randint(-1, 5)
-                self.rect.x -= random.randint(-1, 1)
-            if self.rect.y - self.mouse_position[1] > - self.image.get_size()[1]:
-                self.rect.y -= random.randint(-1, 5)
-                self.rect.x -= random.randint(-1, 1)
+        # if self.is_moving:
+        #    if self.rect.x - self.mouse_position[0] < - self.image.get_size()[0]:
+        #        self.rect.x += random.randint(-1, 5)
+        #        self.rect.y += random.randint(-1, 1)
+        #    if self.rect.x - self.mouse_position[0] > - self.image.get_size()[0]:
+        #        self.rect.x -= random.randint(-1, 5)
+        #        self.rect.y += random.randint(-1, 1)
+        #    if self.rect.y - self.mouse_position[1] < - self.image.get_size()[1]:
+        #        self.rect.y += random.randint(-1, 5)
+        #        self.rect.x -= random.randint(-1, 1)
+        #    if self.rect.y - self.mouse_position[1] > - self.image.get_size()[1]:
+        #        self.rect.y -= random.randint(-1, 5)
+        #        self.rect.x -= random.randint(-1, 1)
 
-        if self.is_moving:
-            self.current_sprite += 0.3
-            if self.current_sprite >= len(self.assetAnimation):
-                self.current_sprite = 0
-            self.image = self.assetAnimation[int(self.current_sprite)]
+        # if self.is_moving:
+        #    self.current_sprite += 0.3
+        #    if self.current_sprite >= len(self.assetAnimation):
+        #        self.current_sprite = 0
+        #    self.image = self.assetAnimation[int(self.current_sprite)]
 
-        if abs(self.rect.x - self.mouse_position[0] + self.image.get_size()[0]) < 3 and\
-                abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[1]) < 3:
-            self.is_moving = False
-            self.current_sprite = 0
+        # if abs(self.rect.x - self.mouse_position[0] + self.image.get_size()[0]) < 3 and\
+        #         abs(self.rect.y - self.mouse_position[1] + self.image.get_size()[1]) < 3:
+        #    self.is_moving = False
+        #    self.current_sprite = 0
         self.position = self.rect.center
 
     # placeholder method for inventory

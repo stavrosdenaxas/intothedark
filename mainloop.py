@@ -23,7 +23,7 @@ def determine_state():
 while game_state.running:
 
     determine_state()
-    clock.tick(60)
+    dt = clock.tick(60)
 
 # Done! Time to quit.
 pygame.quit()

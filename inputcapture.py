@@ -1,14 +1,28 @@
 import pygame
+from pygame.math import Vector2
 import gamestate
 import projectile
 
 
 # checks if right mouse click is pressed and updates the character mouse position
 def character_check_input(character):
-    if pygame.mouse.get_pressed(3)[2]:
-        character.mouse_position = pygame.mouse.get_pos()
-        character.is_moving = True
-
+    move = Vector2()
+    event = pygame.key.get_pressed()
+    if event[pygame.K_w]:
+        move += (0, -3)
+    if event[pygame.K_a]:
+        move += (-3, 0)
+    if event[pygame.K_s]:
+        move += (0, 3)
+    if event[pygame.K_d]:
+        move += (3, 0)
+    if move.length() > 0:
+        move.normalize_ip()
+    print(event)
+    character.move_keyboard(move)
+    # if pygame.mouse.get_pressed(3)[2]:
+    #   character.mouse_position = pygame.mouse.get_pos()
+    #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
         gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, character))
 
