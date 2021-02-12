@@ -18,8 +18,9 @@ def character_check_input(character):
         move += (3, 0)
     if move.length() > 0:
         move.normalize_ip()
-    print(event)
-    character.move_keyboard(move)
+
+    character.velocity = move
+    character.move_keyboard()
     # if pygame.mouse.get_pressed(3)[2]:
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True

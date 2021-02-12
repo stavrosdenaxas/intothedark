@@ -28,8 +28,6 @@ class Projectile(pygame.sprite.Sprite):
     def move(self):
         self.position += self.velocity
         self.rect.center = self.position
-
-        print(self.position)
         self.current_sprite += self.growth_factor
         if self.current_sprite >= len(self.assetAnimation):
             self.current_sprite = 0
@@ -42,7 +40,7 @@ class Projectile(pygame.sprite.Sprite):
 
         for obj in all_sprites:
             if isinstance(obj, enemy.Enemy):
-                if self.rect.colliderect(obj.rect):  # Tests if the player is touching an enemy
-                    all_sprites.remove(obj)  # Removes the enemy from the enemy list (Explained lower)
+                if self.rect.colliderect(obj.rect):
+                    all_sprites.remove(obj)
                     obj.kill()
                     self.kill()
