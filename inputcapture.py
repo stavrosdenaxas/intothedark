@@ -1,13 +1,15 @@
 import pygame
-
+import gamestate
+import projectile
 
 # checks if right mouse click is pressed and updates the character mouse position
 def character_check_input(character):
     if pygame.mouse.get_pressed(3)[2]:
         character.mouse_position = pygame.mouse.get_pos()
-        print(pygame.mouse.get_pos())
-        print(character.mouse_position)
         character.is_moving = True
+
+    if pygame.mouse.get_pressed(3)[0]:
+        gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, character))
 
 
 # checks to see if any key is pressed to switch between title, menu and game screens. Should be changed to change on
