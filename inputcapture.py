@@ -15,17 +15,17 @@ def character_check_input(character):
 
 # checks to see if any key is pressed to switch between title, menu and game screens. Should be changed to change on
 # click of menu item
-def next_screen_check_input(gamestate):
+def next_screen_check_input(gamest):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if gamestate.state == 'title_screen':
-                gamestate.state = 'main_menu'
-            elif gamestate.state == 'main_menu':
-                gamestate.state = 'main_game'
+            if gamest.state == 'title_screen':
+                gamest.state = 'main_menu'
+            elif gamest.state == 'main_menu':
+                gamest.state = 'main_game'
 
 
 # checks to see if user clicks X on top right of window and stops game **NOT CURRENTLY WORKING**
-def quit_check_input(gamestate):
+def quit_check_input(gamest):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            gamestate.running = False
+            gamest.running = False

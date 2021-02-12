@@ -4,12 +4,14 @@ import character
 import flora
 import projectile
 import inputcapture
+import enemy
 
 # set screen resolution variables, this should be customisable in future
 screen_width = 1920
 screen_height = 1080
 all_sprites = pygame.sprite.Group()
 game_area = pygame.Rect(60, 60, screen_width, screen_height)
+
 
 class Gamestate:
     def __init__(self):
@@ -24,16 +26,15 @@ class Gamestate:
         # create a sprite group to hold all sprites
 
         # create our first game objects/sprites as a test
-        self.bonzai_tree1 = flora.Flora()
-        self.bonzai_tree2 = flora.Flora()
-        self.bonzai_tree3 = flora.Flora()
+
         self.mainCharacter = character.Character()
+        self.bonzai_tree1 = flora.Flora()
+        for x in range(20):
+            all_sprites.add(enemy.Enemy(self.mainCharacter, game_area))
 
         # add all sprites to the group
         all_sprites.add(self.mainCharacter)
         all_sprites.add(self.bonzai_tree1)
-        all_sprites.add(self.bonzai_tree2)
-        all_sprites.add(self.bonzai_tree3)
 
     # method called when in title screen to render
     def title_screen(self):
@@ -104,9 +105,11 @@ class Gamestate:
                 obj.animate()
             if isinstance(obj, projectile.Projectile):
                 obj.move()
+                obj.hit(all_sprites)
+            if isinstance(obj, enemy.Enemy):
+                obj.move()
 
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 70), "Len:" + str(len(all_sprites)), (150, 150, 150))
-
         # draw all sprites
         all_sprites.draw(self.screen)
 

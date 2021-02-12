@@ -1,4 +1,5 @@
 import pygame
+import enemy
 from pygame.math import Vector2
 
 
@@ -10,7 +11,7 @@ class Projectile(pygame.sprite.Sprite):
         self.acceleration = Vector2()
         self.position = character.position
         self.velocity = Vector2(mouse_position) - Vector2(character.position)
-        Vector2.scale_to_length(self.velocity, 5)
+        Vector2.scale_to_length(self.velocity, 4)
         # self.acceleration =
 
         self.assetAnimation = [pygame.image.load("Assets/Sprites/Projectiles/Projectile1.png"),
@@ -36,3 +37,12 @@ class Projectile(pygame.sprite.Sprite):
 
         if not self.game_area.contains(self.rect):
             self.kill()
+
+    def hit(self, all_sprites):
+
+        for obj in all_sprites:
+            if isinstance(obj, enemy.Enemy):
+                if self.rect.colliderect(obj.rect):  # Tests if the player is touching an enemy
+                    all_sprites.remove(obj)  # Removes the enemy from the enemy list (Explained lower)
+                    obj.kill()
+                    self.kill()

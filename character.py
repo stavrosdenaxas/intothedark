@@ -62,3 +62,7 @@ class Character(pygame.sprite.Sprite):
     def add_item(self, item):
         self.inventory[0] = item
         return "placeholder"
+
+    # placeholder for death
+    def death(self):
+        self.kill()
