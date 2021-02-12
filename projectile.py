@@ -9,7 +9,9 @@ class Projectile(pygame.sprite.Sprite):
         self.velocity = Vector2()
         self.acceleration = Vector2()
         self.position = character.position
-        self.velocity = pygame.Vector2.normalize(character.position - mouse_position)
+        self.velocity = character.position + mouse_position
+        print(self.velocity)
+        Vector2.scale_to_length(self.velocity, 5)
         print(self.velocity)
         # self.acceleration =
 
@@ -25,11 +27,9 @@ class Projectile(pygame.sprite.Sprite):
         self.game_area = game_area
 
     def move(self):
-        print(self.position)
         self.position += self.velocity
-        print(self.position)
-        self.rect.center = self.position
-
+        self.rect.x = self.position.x
+        self.rect.y = self.position.y
         self.current_sprite += self.growth_factor
         if self.current_sprite >= len(self.assetAnimation):
             self.current_sprite = 0
