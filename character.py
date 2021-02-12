@@ -33,7 +33,6 @@ class Character(pygame.sprite.Sprite):
         self.is_moving = False
         self.is_dead = False
 
-
     def move_keyboard(self):
 
         if not self.is_dead:
@@ -83,7 +82,6 @@ class Character(pygame.sprite.Sprite):
         #    self.is_moving = False
         #    self.current_sprite = 0
 
-
     # placeholder method for inventory
     def add_item(self, item):
         self.inventory[0] = item
@@ -95,7 +93,6 @@ class Character(pygame.sprite.Sprite):
             if isinstance(obj, enemy.Enemy):
                 if self.rect.colliderect(obj.rect):
                     self.is_dead = True
-
 
     # placeholder for death
     def death(self):
