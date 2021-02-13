@@ -1,6 +1,6 @@
 import pygame
 import pygame.freetype
-import character
+import hero
 import flora
 import projectile
 import inputcapture
@@ -26,13 +26,13 @@ class Gamestate:
 
         # create our first game objects/sprites as a test
 
-        self.mainCharacter = character.Character()
+        self.hero = hero.Hero()
         self.bonzai_tree1 = flora.Flora()
         for x in range(20):
-            all_sprites.add(enemy.Enemy(self.mainCharacter, game_area))
+            all_sprites.add(enemy.Enemy(self.hero, game_area))
 
         # add all sprites to the group
-        all_sprites.add(self.mainCharacter)
+        all_sprites.add(self.hero)
         all_sprites.add(self.bonzai_tree1)
 
     # method called when in title screen to render
@@ -40,7 +40,6 @@ class Gamestate:
 
         inputcapture.next_screen_check_input(self)
         # Did the user click the window close button?
-        inputcapture.quit_check_input(self)
 
         # Fill the background with black
         self.screen.fill((0, 0, 0))
@@ -55,7 +54,6 @@ class Gamestate:
     def main_menu(self):
         inputcapture.next_screen_check_input(self)
         # Did the user click the window close button?
-        inputcapture.quit_check_input(self)
         # Fill the background with black
         self.screen.fill((0, 0, 0))
 
@@ -79,26 +77,22 @@ class Gamestate:
 
     def menu_options(self):
         # placeholder for options menu
-        inputcapture.quit_check_input(self)
+        return
 
     def menu_credits(self):
         # placeholder for credits showcase
-        inputcapture.quit_check_input(self)
+        return
 
     def main_game(self, clock):
-
-        # Did the user click the window close button?
-        inputcapture.quit_check_input(self)
-
         # Fill the background with black
         self.screen.fill((0, 0, 0))
-
+        inputcapture.next_screen_check_input(self)
         # check character input
-        inputcapture.character_check_input(self.mainCharacter)
+        inputcapture.character_check_input(self.hero)
 
         # move or animate our test sprites
         for obj in all_sprites:
-            if isinstance(obj, character.Character):
+            if isinstance(obj, hero.Hero):
                 obj.hit(all_sprites)
             if isinstance(obj, flora.Flora):
                 obj.animate()
@@ -112,11 +106,10 @@ class Gamestate:
         # draw all sprites
         all_sprites.draw(self.screen)
 
-        if self.mainCharacter.is_dead and self.mainCharacter.current_sprite == 4:
+        if self.hero.is_dead and self.hero.current_sprite == 4:
             pygame.quit()
 
-        # draw fps in screen
-        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
         # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,30), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
         # Flip the display ( update the display)
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
         pygame.display.flip()
