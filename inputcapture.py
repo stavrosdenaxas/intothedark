@@ -19,13 +19,20 @@ def character_check_input(character):
     if move.length() > 0:
         move.normalize_ip()
 
-    character.velocity = move
-    character.move_keyboard()
+    character.velocity = move * 3
+    character.move()
     # if pygame.mouse.get_pressed(3)[2]:
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
-        gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, character))
+        print(pygame.time.get_ticks())
+        if character.projectile_count >= 10 \
+                or pygame.time.get_ticks() - character.projectile_fired_time < character.fire_rate:
+            return
+        else:
+            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, character))
+            character.projectile_count += 1
+            character.projectile_fired_time = pygame.time.get_ticks()
 
 
 # checks to see if any key is pressed to switch between title, menu and game screens. Should be changed to change on

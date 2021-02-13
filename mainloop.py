@@ -20,10 +20,13 @@ def determine_state():
 
 
 # main game loop, clock set to 60fps max
-while game_state.running:
+def main():
+    while game_state.running:
+        clock.tick(60)
+        determine_state()
+    # Done! Time to quit.
+    pygame.quit()
 
-    determine_state()
-    dt = clock.tick(60)
 
-# Done! Time to quit.
-pygame.quit()
+if __name__ == '__main__':
+    main()

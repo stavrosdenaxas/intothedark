@@ -22,7 +22,6 @@ class Gamestate:
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
         self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 12)
-
         # create a sprite group to hold all sprites
 
         # create our first game objects/sprites as a test
@@ -100,7 +99,7 @@ class Gamestate:
         # move or animate our test sprites
         for obj in all_sprites:
             if isinstance(obj, character.Character):
-                obj.move()
+                obj.hit(all_sprites)
             if isinstance(obj, flora.Flora):
                 obj.animate()
             if isinstance(obj, projectile.Projectile):
@@ -109,9 +108,12 @@ class Gamestate:
             if isinstance(obj, enemy.Enemy):
                 obj.move()
 
-        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 70), "Len:" + str(len(all_sprites)), (150, 150, 150))
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
         # draw all sprites
         all_sprites.draw(self.screen)
+
+        if self.mainCharacter.is_dead and self.mainCharacter.current_sprite == 4:
+            pygame.quit()
 
         # draw fps in screen
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))

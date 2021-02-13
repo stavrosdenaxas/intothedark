@@ -23,6 +23,7 @@ class Projectile(pygame.sprite.Sprite):
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
         self.rect.center = self.position
+        self.character = character
         self.game_area = game_area
 
     def move(self):
@@ -35,6 +36,7 @@ class Projectile(pygame.sprite.Sprite):
 
         if not self.game_area.contains(self.rect):
             self.kill()
+            self.character.projectile_count -= 1
 
     def hit(self, all_sprites):
 
@@ -44,3 +46,4 @@ class Projectile(pygame.sprite.Sprite):
                     all_sprites.remove(obj)
                     obj.kill()
                     self.kill()
+                    self.character.projectile_count -= 1
