@@ -5,9 +5,10 @@ import projectile
 
 
 # checks if right mouse click is pressed and updates the character mouse position
-def character_check_input(character):
-    move = Vector2(0,0)
+def hero_check_input(hero):
+    move = Vector2(0, 0)
     event = pygame.key.get_pressed()
+
     if event[pygame.K_w]:
         move += (0, -3)
     if event[pygame.K_a]:
@@ -16,29 +17,26 @@ def character_check_input(character):
         move += (0, 3)
     if event[pygame.K_d]:
         move += (3, 0)
+
     if move.length() > 0:
         move.normalize_ip()
-
-    if move == Vector2(0,0):
-        character.is_moving = False
-        character.velocity = move
+        move.scale_to_length(3.0)
+        hero.is_moving = True
     else:
-        character.velocity = move * 3
-        character.is_moving = True
+        hero.is_moving = False
 
-    character.move()
+    hero.velocity = move
     # if pygame.mouse.get_pressed(3)[2]:
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
-        print(pygame.time.get_ticks())
-        if character.projectile_count >= 10 \
-                or pygame.time.get_ticks() - character.projectile_fired_time < character.fire_rate:
+        if hero.projectile_count >= 15\
+                or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate:
             return
         else:
-            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, character))
-            character.projectile_count += 1
-            character.projectile_fired_time = pygame.time.get_ticks()
+            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, hero))
+            hero.projectile_count += 1
+            hero.projectile_fired_time = pygame.time.get_ticks()
 
 
 # checks to see if any key is pressed to switch between title, menu and game screens. Should be changed to change on
@@ -55,5 +53,5 @@ def next_screen_check_input(gamest):
 
 # checks to see if user clicks X on top right of window and stops game **NOT CURRENTLY WORKING**
 def quit_check_input(gamest, event):
-        if event.type == pygame.QUIT:
-            gamest.running = False
+    if event.type == pygame.QUIT:
+        gamest.running = False

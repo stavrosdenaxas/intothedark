@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 
+# placeholder for parent of Enemy, Hero and other physical game objects/chars
 class GameObject(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()

@@ -19,28 +19,30 @@ class Hero(pygame.sprite.Sprite):
                                pygame.image.load("Assets/Sprites/Hero/CharTestDeath4.png"),
                                pygame.image.load("Assets/Sprites/Hero/CharTestDeath5.png")]
         self.position = Vector2()
-        self.velocity = Vector2()
+        self.velocity = Vector2(0, 0)
         self.acceleration = Vector2()
+        self.camera = Vector2(0, 0)
         self.current_sprite = 0
         self.scale_factor = 0.5
         self.mouse_position = [random.randint(100, 500), random.randint(100, 500)]
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(100, 500)
-        self.rect.y = random.randint(100, 500)
+        self.rect.x = 1920/2
+        self.rect.y = 1080/2
         self.position = self.rect.center
         self.projectile_count = 0
-        self.fire_rate = 400
+        self.fire_rate = 100
         self.projectile_fired_time = pygame.time.get_ticks()
         self.inventory = [1]
         self.is_moving = False
         self.is_dead = False
 
-    def move(self):
+    def update(self):
 
         if not self.is_dead:
+            self.camera -= self.velocity
             self.position += self.velocity
-            self.rect.center = self.position
+            self.rect.center += self.velocity
 
             if self.is_moving:
                 self.current_sprite += 0.3
@@ -50,7 +52,6 @@ class Hero(pygame.sprite.Sprite):
                 self.current_sprite = 0
 
             self.image = self.assetAnimation[int(self.current_sprite)]
-            self.position = self.rect.center
 
         elif self.is_dead:
             self.current_sprite += 0.15
@@ -59,6 +60,7 @@ class Hero(pygame.sprite.Sprite):
             self.image = self.deathAnimation[int(self.current_sprite)]
 
         self.position = self.rect.center
+
 
     # placeholder method for inventory
     def add_item(self, item):
@@ -73,7 +75,3 @@ class Hero(pygame.sprite.Sprite):
                     if self.rect.colliderect(obj.rect):
                         self.is_dead = True
                         self.current_sprite = 1
-
-    # placeholder for death
-    def death(self):
-        self.kill()
