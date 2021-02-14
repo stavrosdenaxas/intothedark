@@ -5,11 +5,13 @@ import flora
 import projectile
 import inputcapture
 import enemy
+import forestlevel
 
 # set screen resolution variables, this should be customisable in future
 screen_width = 1920
 screen_height = 1080
 all_sprites = pygame.sprite.Group()
+all_level_sprites = pygame.sprite.Group()
 game_area = pygame.Rect(60, 60, screen_width, screen_height)
 
 
@@ -18,14 +20,15 @@ class Gamestate:
 
         self.state = 'title_screen'
         self.screen = pygame.display.set_mode([screen_width, screen_height])
+        self.background_surface = pygame.Surface([screen_width, screen_height])
         self.running = True
+        self.level = "none"
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
         self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 12)
         # create a sprite group to hold all sprites
 
         # create our first game objects/sprites as a test
-
         self.hero = hero.Hero()
         self.bonzai_tree1 = flora.Flora()
         for x in range(20):
@@ -90,6 +93,10 @@ class Gamestate:
         # check character input
         inputcapture.character_check_input(self.hero)
 
+        if self.level == "none":
+            # self.level == "forest"
+            forest_level = forestlevel.ForestLevel(self.screen)
+
         # move or animate our test sprites
         for obj in all_sprites:
             if isinstance(obj, hero.Hero):
@@ -102,8 +109,9 @@ class Gamestate:
             if isinstance(obj, enemy.Enemy):
                 obj.move()
 
-        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
+
         # draw all sprites
+        # all_level_sprites.draw(self.screen)
         all_sprites.draw(self.screen)
 
         if self.hero.is_dead and self.hero.current_sprite == 4:
@@ -112,4 +120,6 @@ class Gamestate:
         # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,30), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
         # Flip the display ( update the display)
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_level_sprites)), (150, 150, 150))
+        # self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "Len:" + str(len(all_level_sprites)), (150, 150, 150))
         pygame.display.flip()
