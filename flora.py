@@ -9,8 +9,7 @@ class Flora(pygame.sprite.Sprite):
         self.treeAnimation = [pygame.image.load("Assets/Sprites/Flora/Bonzai1.png"),
                               pygame.image.load("Assets/Sprites/Flora/Bonzai2.png"),
                               pygame.image.load("Assets/Sprites/Flora/Bonzai3.png"),
-                              pygame.image.load("Assets/Sprites/Flora/Bonzai4.png"),
-                              pygame.image.load("Assets/Sprites/Flora/Bonzai5.png")]
+                              pygame.image.load("Assets/Sprites/Flora/Bonzai4.png")]
         self.current_sprite = 0
         self.scale_factor = 0.5
         self.position = Vector2()

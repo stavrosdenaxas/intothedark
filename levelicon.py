@@ -31,4 +31,3 @@ class LevelIcon(pygame.sprite.Sprite):
                         # enter level if collide
                         game_state.state = "main_game"
                         game_state.level = "Forest"
-

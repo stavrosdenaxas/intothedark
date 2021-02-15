@@ -71,6 +71,9 @@ class Hero(pygame.sprite.Sprite):
             for obj in all_sprites:
                 if isinstance(obj, enemy.Enemy):
                     if self.rect.colliderect(obj.rect):
-                        self.is_dead = True
-                        self.current_sprite = 1
-                        gamestate.time_of_death = pygame.time.get_ticks()
+                        self.death(gamestate)
+
+    def death(self, gamestate):
+        self.is_dead = True
+        self.current_sprite = 1
+        gamestate.time_of_death = pygame.time.get_ticks()
