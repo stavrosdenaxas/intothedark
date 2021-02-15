@@ -40,10 +40,8 @@ class Hero(pygame.sprite.Sprite):
 
         if not self.is_dead:
             self.camera -= self.velocity
-            # self.position += self.velocity
+            self.position += self.velocity
             self.rect.center += self.velocity
-            print("rect.center:" + str(self.rect.center))
-            print("self.position:" + str(self.position))
 
             if self.is_moving:
                 self.current_sprite += 0.3
@@ -67,7 +65,7 @@ class Hero(pygame.sprite.Sprite):
         self.inventory[0] = item
         return "placeholder"
 
-    def hit(self, all_sprites):
+    def hit(self, all_sprites, gamestate):
 
         if not self.is_dead:
             for obj in all_sprites:
@@ -75,3 +73,4 @@ class Hero(pygame.sprite.Sprite):
                     if self.rect.colliderect(obj.rect):
                         self.is_dead = True
                         self.current_sprite = 1
+                        gamestate.time_of_death = pygame.time.get_ticks()

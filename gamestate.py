@@ -17,9 +17,9 @@ game_area = pygame.Rect(0, 0, screen_width, screen_height)
 
 
 class Gamestate:
-    def __init__(self):
-
-        self.state = 'title_screen'
+    def __init__(self, state):
+        all_sprites.empty()
+        self.state = state
         self.camera = Vector2(0, 0)
         self.screen = pygame.display.set_mode([screen_width, screen_height])
         self.background_surface = pygame.Surface([screen_width, screen_height])
@@ -33,7 +33,9 @@ class Gamestate:
 
         # create our first game objects/sprites as a test
         self.hero = hero.Hero(screen_width, screen_height)
-
+        self.hero.is_moving = False
+        self.hero.is_dead = False
+        self.time_of_death = 100000000000000000
         # add all sprites to the group
         all_sprites.add(self.hero)
         self.forest_level = forestlevel.ForestLevel(all_sprites, self.hero, game_area)
@@ -86,6 +88,12 @@ class Gamestate:
         # placeholder for credits showcase
         return
 
+
+    def game_lobby(self):
+        # game lobby placeholder
+        return
+
+
     def main_game(self, clock):
         # Fill the background with black
         # self.screen.fill((0, 0, 0))
@@ -106,7 +114,7 @@ class Gamestate:
             if isinstance(obj, enemy.Enemy):
                 obj.update()
             if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites)
+                obj.hit(all_sprites, self)
                 obj.update()
 
         # draw all sprites

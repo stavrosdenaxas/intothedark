@@ -6,7 +6,7 @@ pygame.init()
 clock = pygame.time.Clock()
 # Create gamestate object, where the current game state is kept. This object coordinates:
 # the main game loop, transitions between screen and levels of the game
-game_state = gamestate.Gamestate()
+game_state = gamestate.Gamestate('title_screen')
 
 
 # determine the state of the game: if we are in a title, menu or gameplay screen and then run loop code
@@ -19,12 +19,20 @@ def determine_state():
         game_state.main_game(clock)
 
 
+def game_restart_check():
+    if pygame.time.get_ticks() - game_state.time_of_death >= 4000:
+        game_state.__init__('main_menu')
+        print("restart")
+
+
 # main game loop, clock set to 60fps max
 def main():
     while game_state.running:
         clock.tick(60)
         determine_state()
+        game_restart_check()
     # Done! Time to quit.
+
     pygame.quit()
 
 

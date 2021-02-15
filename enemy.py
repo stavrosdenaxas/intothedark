@@ -22,8 +22,8 @@ class Enemy(pygame.sprite.Sprite):
         self.mouse_position = [random.randint(100, 500), random.randint(100, 500)]
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(100, 500)
-        self.rect.y = random.randint(100, 500)
+        self.rect.x = random.randint(100, 1200)
+        self.rect.y = random.randint(100, 1200)
         self.position = self.rect.center
         self.is_moving = True
 
