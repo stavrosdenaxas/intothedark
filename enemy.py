@@ -26,6 +26,15 @@ class Enemy(pygame.sprite.Sprite):
             self.velocity = Vector2(self.hero.position) - Vector2(self.position)
             Vector2.scale_to_length(self.velocity, 8)
 
+        if self.enemy_type == "Hydra":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/hydra/hydra1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/hydra/hydra2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/hydra/hydra3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/hydra/hydra4.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/hydra/hydra5.png")]
+            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
+            Vector2.scale_to_length(self.velocity, 8)
+
         Vector2.scale_to_length(self.velocity, 3)
         self.game_area = game_area
         self.current_sprite = 0
@@ -53,4 +62,6 @@ class Enemy(pygame.sprite.Sprite):
         if self.enemy_type == "Mushroom":
             Vector2.scale_to_length(self.velocity, 1)
         if self.enemy_type == "Skeletor":
+            Vector2.scale_to_length(self.velocity, 2)
+        if self.enemy_type == "Hydra":
             Vector2.scale_to_length(self.velocity, 2)
