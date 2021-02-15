@@ -1,11 +1,10 @@
 import pygame
-import random
 import enemy
 from pygame.math import Vector2
 
 
 class Hero(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, screen_width, screen_height):
         super().__init__()
         self.assetAnimation = [pygame.image.load("Assets/Sprites/Hero/CharTestWizard1.png"),
                                pygame.image.load("Assets/Sprites/Hero/CharTestWizard2.png"),
@@ -21,14 +20,13 @@ class Hero(pygame.sprite.Sprite):
         self.position = Vector2()
         self.velocity = Vector2(0, 0)
         self.acceleration = Vector2()
-        self.camera = Vector2(0, 0)
+
         self.current_sprite = 0
         self.scale_factor = 0.5
-        self.mouse_position = [random.randint(100, 500), random.randint(100, 500)]
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = 1920/2
-        self.rect.y = 1080/2
+        self.rect.x = screen_width/2
+        self.rect.y = screen_height/2
         self.position = self.rect.center
         self.projectile_count = 0
         self.fire_rate = 100
@@ -36,13 +34,16 @@ class Hero(pygame.sprite.Sprite):
         self.inventory = [1]
         self.is_moving = False
         self.is_dead = False
+        self.camera = Vector2(self.rect.x - screen_width/2, self.rect.y - screen_height/2)
 
     def update(self):
 
         if not self.is_dead:
             self.camera -= self.velocity
-            self.position += self.velocity
+            # self.position += self.velocity
             self.rect.center += self.velocity
+            print("rect.center:" + str(self.rect.center))
+            print("self.position:" + str(self.position))
 
             if self.is_moving:
                 self.current_sprite += 0.3

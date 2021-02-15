@@ -32,7 +32,7 @@ class Gamestate:
         # create a sprite group to hold all sprites
 
         # create our first game objects/sprites as a test
-        self.hero = hero.Hero()
+        self.hero = hero.Hero(screen_width, screen_height)
 
         # add all sprites to the group
         all_sprites.add(self.hero)
@@ -98,15 +98,15 @@ class Gamestate:
 
         # move or animate our test sprites
         for obj in all_sprites:
-            if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites)
-                obj.update()
             if isinstance(obj, flora.Flora):
                 obj.update()
             if isinstance(obj, projectile.Projectile):
                 obj.update()
                 obj.hit(all_sprites)
             if isinstance(obj, enemy.Enemy):
+                obj.update()
+            if isinstance(obj, hero.Hero):
+                obj.hit(all_sprites)
                 obj.update()
 
         # draw all sprites

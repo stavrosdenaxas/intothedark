@@ -4,7 +4,6 @@ import gamestate
 import projectile
 
 
-# checks if right mouse click is pressed and updates the character mouse position
 def hero_check_input(hero):
     move = Vector2(0, 0)
     event = pygame.key.get_pressed()
