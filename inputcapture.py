@@ -27,6 +27,7 @@ def hero_check_input(hero):
 
     hero.velocity = move
     # if pygame.mouse.get_pressed(3)[2]:
+    # test comment
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
