@@ -8,12 +8,13 @@ import flora
 import projectile
 import inputcapture
 import forestlevel
+import levelicon
 
 # set screen resolution variables, this should be customisable in future
 screen_width = 1920
 screen_height = 1080
 all_sprites = pygame.sprite.Group()
-game_area = pygame.Rect(0, 0, screen_width, screen_height)
+game_area = pygame.Rect(0, 0, screen_width * 4, screen_height * 4)
 
 
 class Gamestate:
@@ -25,7 +26,7 @@ class Gamestate:
         self.background_surface = pygame.Surface([screen_width, screen_height])
 
         self.running = True
-        self.level = "Forest"
+        self.level = "none"
         self.GAME_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 128)
         self.MENU_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 96)
         self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 12)
@@ -38,7 +39,8 @@ class Gamestate:
         self.time_of_death = 100000000000000000
         # add all sprites to the group
         all_sprites.add(self.hero)
-        self.forest_level = forestlevel.ForestLevel(all_sprites, self.hero, game_area)
+        self.forest_level = None
+
 
     # method called when in title screen to render
     def title_screen(self):
@@ -88,15 +90,35 @@ class Gamestate:
         # placeholder for credits showcase
         return
 
+    def game_lobby(self, clock):
+        self.screen.fill((0, 0, 0))
 
-    def game_lobby(self):
-        # game lobby placeholder
-        return
+        inputcapture.next_screen_check_input(self)
+        inputcapture.hero_check_input(self.hero)
+        # forest flora
 
+        for obj in all_sprites:
+            if isinstance(obj, levelicon.LevelIcon):
+                obj.update()
+                obj.hit(all_sprites, self)
+            if isinstance(obj, hero.Hero):
+                obj.hit(all_sprites, self)
+                obj.update()
 
-    def main_game(self, clock):
+        for sprite in all_sprites:
+            self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
+
+        if self.level == "Forest":
+            all_sprites.empty()
+            self.forest_level = forestlevel.ForestLevel(all_sprites, self.hero, game_area)
+
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
+        pygame.display.flip()
+
+    def main_game(self, clock ):
         # Fill the background with black
-        # self.screen.fill((0, 0, 0))
+        self.screen.fill((0, 0, 0))
         inputcapture.next_screen_check_input(self)
         # check character input
         inputcapture.hero_check_input(self.hero)

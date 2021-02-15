@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 import gamestate
 import projectile
+import levelicon
 
 
 def hero_check_input(hero):
@@ -29,7 +30,7 @@ def hero_check_input(hero):
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
-        if hero.projectile_count >= 15\
+        if hero.projectile_count >= 55\
                 or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate or hero.is_dead == True:
             return
         else:
@@ -46,7 +47,11 @@ def next_screen_check_input(gamest):
             if gamest.state == 'title_screen':
                 gamest.state = 'main_menu'
             elif gamest.state == 'main_menu':
-                gamest.state = 'main_game'
+                forest_level_icon = levelicon.LevelIcon(2000, 1500)
+                gamestate.all_sprites.add(forest_level_icon)
+                gamest.state = 'game_lobby'
+            # elif gamest.state == 'game_lobby':
+            #    gamest.state = 'main_game'
         quit_check_input(gamest, event)
 
 

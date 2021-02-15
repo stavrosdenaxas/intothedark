@@ -15,6 +15,8 @@ def determine_state():
         game_state.title_screen()
     if game_state.state == 'main_menu':
         game_state.main_menu()
+    if game_state.state == 'game_lobby':
+        game_state.game_lobby(clock)
     if game_state.state == 'main_game':
         game_state.main_game(clock)
 

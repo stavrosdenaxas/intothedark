@@ -25,8 +25,8 @@ class Hero(pygame.sprite.Sprite):
         self.scale_factor = 0.5
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
-        self.rect.x = screen_width/2
-        self.rect.y = screen_height/2
+        self.rect.x = screen_width
+        self.rect.y = screen_height
         self.position = self.rect.center
         self.projectile_count = 0
         self.fire_rate = 100
@@ -34,7 +34,7 @@ class Hero(pygame.sprite.Sprite):
         self.inventory = [1]
         self.is_moving = False
         self.is_dead = False
-        self.camera = Vector2(self.rect.x - screen_width/2, self.rect.y - screen_height/2)
+        self.camera = Vector2(-screen_width/2, - screen_height/2)
 
     def update(self):
 
