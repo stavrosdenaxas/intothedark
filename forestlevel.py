@@ -2,6 +2,7 @@ import pygame
 import enemy
 import flora
 
+
 class ForestLevel:
     def __init__(self, all_sprites, hero, game_area):
         # forest floor
@@ -14,7 +15,6 @@ class ForestLevel:
         # forest flora
         self.bonzai_tree1 = flora.Flora()
         all_sprites.add(self.bonzai_tree1)
-
 
     def draw(self, screen, camera):
         for x in range(10):

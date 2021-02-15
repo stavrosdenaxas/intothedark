@@ -62,7 +62,6 @@ class Hero(pygame.sprite.Sprite):
 
         self.position = self.rect.center
 
-
     # placeholder method for inventory
     def add_item(self, item):
         self.inventory[0] = item
