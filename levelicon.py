@@ -4,9 +4,16 @@ from pygame.math import Vector2
 
 
 class LevelIcon(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, level_type):
         super().__init__()
-        self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Bonzai1.png")]
+        if level_type == "Forest":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Bonzai1.png")]
+        if level_type == "Mountain":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Rock.png")]
+        if level_type == "Swamp":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Swamp.png")]
+        if level_type == "Mergamoth":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Swamp.png")]
         self.position = Vector2()
         self.velocity = Vector2(0, 0)
         self.acceleration = Vector2()
@@ -19,6 +26,7 @@ class LevelIcon(pygame.sprite.Sprite):
         self.position = self.rect.center
         self.is_moving = False
         self.is_dead = False
+        self.level_type = level_type
 
     def update(self):
         self.rect.center = self.position
@@ -30,4 +38,5 @@ class LevelIcon(pygame.sprite.Sprite):
                     if self.rect.colliderect(obj.rect):
                         # enter level if collide
                         game_state.state = "main_game"
+                        # game_state.level = self.level_type
                         game_state.level = "Forest"

@@ -4,17 +4,28 @@ from pygame.math import Vector2
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, hero, game_area):
+    def __init__(self, hero, game_area, enemy_type):
         super().__init__()
         self.hero = hero
-        self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Enemy1.png"),
-                               pygame.image.load("Assets/Sprites/Enemies/Enemy2.png"),
-                               pygame.image.load("Assets/Sprites/Enemies/Enemy3.png"),
-                               pygame.image.load("Assets/Sprites/Enemies/Enemy4.png")]
+        self.enemy_type = enemy_type
         self.position = Vector2()
         self.velocity = Vector2()
         self.acceleration = Vector2()
-        self.velocity = Vector2(self.hero.position) - Vector2(self.position)
+        if self.enemy_type == "Mushroom":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Enemy1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Enemy2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Enemy3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Enemy4.png")]
+            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
+            Vector2.scale_to_length(self.velocity, 3)
+        if self.enemy_type == "Skeletor":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor4.png")]
+            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
+            Vector2.scale_to_length(self.velocity, 8)
+
         Vector2.scale_to_length(self.velocity, 3)
         self.game_area = game_area
         self.current_sprite = 0
@@ -39,4 +50,7 @@ class Enemy(pygame.sprite.Sprite):
         if not self.game_area.contains(self.rect):
             self.kill()
         self.velocity = Vector2(self.hero.position) - Vector2(self.position)
-        self.velocity.normalize_ip()
+        if self.enemy_type == "Mushroom":
+            Vector2.scale_to_length(self.velocity, 1)
+        if self.enemy_type == "Skeletor":
+            Vector2.scale_to_length(self.velocity, 2)

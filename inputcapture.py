@@ -47,8 +47,12 @@ def next_screen_check_input(gamest):
             if gamest.state == 'title_screen':
                 gamest.state = 'main_menu'
             elif gamest.state == 'main_menu':
-                forest_level_icon = levelicon.LevelIcon(1500, 1500)
+                forest_level_icon = levelicon.LevelIcon(1500, 1500, "Forest")
+                swamp_level_icon = levelicon.LevelIcon(1500, 1200, "Swamp")
+                mountain_level_icon = levelicon.LevelIcon(1500, 900, "Mountain")
                 gamestate.all_sprites.add(forest_level_icon)
+                gamestate.all_sprites.add(swamp_level_icon)
+                gamestate.all_sprites.add(mountain_level_icon)
                 gamest.state = 'game_lobby'
             # elif gamest.state == 'game_lobby':
             #    gamest.state = 'main_game'
