@@ -102,7 +102,7 @@ class Gamestate:
                 obj.hit(all_sprites, self)
             if isinstance(obj, hero.Hero):
                 obj.hit(all_sprites, self)
-                obj.update()
+                obj.update(all_sprites)
 
         for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):
             self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
@@ -136,8 +136,8 @@ class Gamestate:
                 obj.update()
             if isinstance(obj, hero.Hero):
                 obj.hit(all_sprites, self)
-                obj.update()
-                obj.collide(all_sprites)
+                obj.update(all_sprites)
+                #obj.collide(all_sprites)
 
         # draw all sprites sorted by y
         for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):

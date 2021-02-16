@@ -37,12 +37,34 @@ class Hero(pygame.sprite.Sprite):
         self.is_dead = False
         self.camera = Vector2(-screen_width/2, - screen_height/2)
 
-    def update(self):
+    def update(self, all_sprites):
 
         if not self.is_dead:
+            self.rect.x += self.velocity.x
+            for obj in all_sprites:
+                if isinstance(obj, flora.Flora):
+                    if self.rect.colliderect(obj.collide_rect):
+                        if self.velocity.x < 0:
+                            self.rect.left = obj.collide_rect.right
+                            self.velocity.x = 0
+                        elif self.velocity.x > 0:
+                            self.rect.right = obj.collide_rect.left
+                            self.velocity.x = 0
+
+            self.rect.y += self.velocity.y
+            for obj in all_sprites:
+                if isinstance(obj, flora.Flora):
+                    if self.rect.colliderect(obj.collide_rect):
+                        if self.velocity.y < 0:
+                            self.rect.top = obj.collide_rect.bottom
+                            self.velocity.y = 0
+                        elif self.velocity.y > 0:
+                            self.rect.bottom = obj.collide_rect.top
+                            self.velocity.y = 0
+
             self.camera -= self.velocity
-            self.position += self.velocity
-            self.rect.center += self.velocity
+
+            self.position = self.rect.center
 
             if self.is_moving:
                 self.current_sprite += 0.3
@@ -66,7 +88,7 @@ class Hero(pygame.sprite.Sprite):
         self.inventory[0] = item
         return "placeholder"
 
-    def collide(self, all_sprites):
+    def collide2(self, all_sprites):
         if not self.is_dead:
             for obj in all_sprites:
                 if isinstance(obj, flora.Flora):
@@ -76,10 +98,9 @@ class Hero(pygame.sprite.Sprite):
                         elif self.velocity.x > 0:
                             self.rect.right = obj.collide_rect.left
                         elif self.velocity.y < 0:
-                            self.rect.midtop = obj.collide_rect.midbottom
+                            self.rect.top = obj.collide_rect.bottom
                         elif self.velocity.y > 0:
-                            self.rect.midbottom = obj.collide_rect.midtop
-
+                            self.rect.bottom = obj.collide_rect.top
                         self.camera += self.velocity
 
     def hit(self, all_sprites, gamestate):
