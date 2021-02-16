@@ -41,7 +41,6 @@ class Gamestate:
         all_sprites.add(self.hero)
         self.forest_level = None
 
-
     # method called when in title screen to render
     def title_screen(self):
 
@@ -116,7 +115,7 @@ class Gamestate:
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
         pygame.display.flip()
 
-    def main_game(self, clock ):
+    def main_game(self, clock):
         # Fill the background with black
         self.screen.fill((0, 0, 0))
         inputcapture.next_screen_check_input(self)
@@ -138,12 +137,11 @@ class Gamestate:
             if isinstance(obj, hero.Hero):
                 obj.hit(all_sprites, self)
                 obj.update()
+                obj.collide(all_sprites)
 
         # draw all sprites sorted by y
         for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):
             self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
-
-
 
         # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,30), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
         # Flip the display ( update the display)

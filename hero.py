@@ -1,5 +1,6 @@
 import pygame
 import enemy
+import flora
 from pygame.math import Vector2
 
 
@@ -64,6 +65,22 @@ class Hero(pygame.sprite.Sprite):
     def add_item(self, item):
         self.inventory[0] = item
         return "placeholder"
+
+    def collide(self, all_sprites):
+        if not self.is_dead:
+            for obj in all_sprites:
+                if isinstance(obj, flora.Flora):
+                    if self.rect.colliderect(obj.collide_rect):
+                        if self.velocity.x < 0:
+                            self.rect.left = obj.collide_rect.right
+                        elif self.velocity.x > 0:
+                            self.rect.right = obj.collide_rect.left
+                        elif self.velocity.y < 0:
+                            self.rect.midtop = obj.collide_rect.midbottom
+                        elif self.velocity.y > 0:
+                            self.rect.midbottom = obj.collide_rect.midtop
+
+                        self.camera += self.velocity
 
     def hit(self, all_sprites, gamestate):
 

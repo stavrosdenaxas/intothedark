@@ -35,7 +35,6 @@ class Enemy(pygame.sprite.Sprite):
             self.velocity = Vector2(self.hero.position) - Vector2(self.position)
             Vector2.scale_to_length(self.velocity, 8)
 
-        Vector2.scale_to_length(self.velocity, 3)
         self.game_area = game_area
         self.current_sprite = 0
         self.scale_factor = 0.5
@@ -55,6 +54,7 @@ class Enemy(pygame.sprite.Sprite):
             if self.current_sprite >= len(self.assetAnimation):
                 self.current_sprite = 0
             self.image = self.assetAnimation[int(self.current_sprite)]
+
 
         if not self.game_area.contains(self.rect):
             self.kill()

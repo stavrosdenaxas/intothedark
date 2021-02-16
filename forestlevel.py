@@ -7,7 +7,7 @@ class ForestLevel:
     def __init__(self, all_sprites, hero, game_area):
         # forest floor
         self.tileset = pygame.image.load("Assets/Sprites/Tilemap/ForestFloor.png").convert()
-        for x in range(100):
+        for x in range(5):
             all_sprites.add(flora.Flora("Tree1"))
             all_sprites.add(flora.Flora("Tree2"))
         # forest enemies
