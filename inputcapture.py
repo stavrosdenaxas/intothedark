@@ -27,12 +27,11 @@ def hero_check_input(hero):
 
     hero.velocity = move
     # if pygame.mouse.get_pressed(3)[2]:
-    # test comment
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
         if hero.projectile_count >= 55\
-                or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate or hero.is_dead == True:
+                or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate or hero.is_dead:
             return
         else:
             gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, hero))
