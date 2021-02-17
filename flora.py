@@ -27,10 +27,16 @@ class Flora(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(100, 2500)
         self.rect.y = random.randint(100, 2500)
-        self.collide_rect = pygame.Rect(self.rect.x,
-                                        self.rect.y + self.image.get_height() * 0.8,
-                                        self.image.get_width(),
-                                        self.image.get_height() * 0.15)
+        if tree_type == "Tree1" or tree_type == "Tree2" :
+            self.collide_rect = pygame.Rect(self.rect.x + 85,
+                                            self.rect.y + 160,
+                                            45,
+                                            10)
+        else:
+            self.collide_rect = pygame.Rect((self.rect.x + 10,
+                                            self.rect.y + 160),
+                                            (45,
+                                            10))
         self.position = self.rect.center
         self.growth_factor = random.randint(100, 1000)/10000
         self.is_moving = False

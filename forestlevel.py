@@ -11,7 +11,7 @@ class ForestLevel:
             all_sprites.add(flora.Flora("Tree1"))
             all_sprites.add(flora.Flora("Tree2"))
         # forest enemies
-        for x in range(50):
+        for x in range(10):
             all_sprites.add(enemy.Enemy(hero, game_area, "Mushroom"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Skeletor"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Hydra"))

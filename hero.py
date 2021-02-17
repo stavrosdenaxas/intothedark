@@ -29,6 +29,10 @@ class Hero(pygame.sprite.Sprite):
         self.rect.x = screen_width
         self.rect.y = screen_height
         self.position = self.rect.center
+        self.collide_rect = pygame.Rect(self.rect.x + 12,
+                                        self.rect.y + 50,
+                                        15,
+                                        15)
         self.projectile_count = 0
         self.fire_rate = 100
         self.projectile_fired_time = pygame.time.get_ticks()
@@ -41,29 +45,34 @@ class Hero(pygame.sprite.Sprite):
 
         if not self.is_dead:
             self.rect.x += self.velocity.x
+            self.collide_rect.x += self.velocity.x
             for obj in all_sprites:
                 if isinstance(obj, flora.Flora):
-                    if self.rect.colliderect(obj.collide_rect):
+                    if self.collide_rect.colliderect(obj.collide_rect):
                         if self.velocity.x < 0:
+                            self.collide_rect.left = obj.collide_rect.right
                             self.rect.left = obj.collide_rect.right
                             self.velocity.x = 0
                         elif self.velocity.x > 0:
                             self.rect.right = obj.collide_rect.left
+                            self.collide_rect.right = obj.collide_rect.left
                             self.velocity.x = 0
 
             self.rect.y += self.velocity.y
+            self.collide_rect.y += self.velocity.y
             for obj in all_sprites:
                 if isinstance(obj, flora.Flora):
-                    if self.rect.colliderect(obj.collide_rect):
+                    if self.collide_rect.colliderect(obj.collide_rect):
                         if self.velocity.y < 0:
-                            self.rect.top = obj.collide_rect.bottom
+                            self.collide_rect.top = obj.collide_rect.bottom
+                            self.rect.bottom = self.collide_rect.bottom
                             self.velocity.y = 0
                         elif self.velocity.y > 0:
                             self.rect.bottom = obj.collide_rect.top
+                            self.collide_rect.bottom = obj.collide_rect.top
                             self.velocity.y = 0
 
             self.camera -= self.velocity
-
             self.position = self.rect.center
 
             if self.is_moving:
@@ -87,21 +96,6 @@ class Hero(pygame.sprite.Sprite):
     def add_item(self, item):
         self.inventory[0] = item
         return "placeholder"
-
-    def collide2(self, all_sprites):
-        if not self.is_dead:
-            for obj in all_sprites:
-                if isinstance(obj, flora.Flora):
-                    if self.rect.colliderect(obj.collide_rect):
-                        if self.velocity.x < 0:
-                            self.rect.left = obj.collide_rect.right
-                        elif self.velocity.x > 0:
-                            self.rect.right = obj.collide_rect.left
-                        elif self.velocity.y < 0:
-                            self.rect.top = obj.collide_rect.bottom
-                        elif self.velocity.y > 0:
-                            self.rect.bottom = obj.collide_rect.top
-                        self.camera += self.velocity
 
     def hit(self, all_sprites, gamestate):
 
