@@ -1,5 +1,7 @@
 import pygame
 import random
+import gamestate
+import projectile
 from pygame.math import Vector2
 
 
@@ -16,24 +18,23 @@ class Enemy(pygame.sprite.Sprite):
                                    pygame.image.load("Assets/Sprites/Enemies/Enemy2.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Enemy3.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Enemy4.png")]
-            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
-            Vector2.scale_to_length(self.velocity, 3)
         if self.enemy_type == "Skeletor":
             self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor1.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor2.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor3.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor4.png")]
-            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
-            Vector2.scale_to_length(self.velocity, 8)
-
         if self.enemy_type == "Hydra":
             self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/hydra/hydra1.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/hydra/hydra2.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/hydra/hydra3.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/hydra/hydra4.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/hydra/hydra5.png")]
-            self.velocity = Vector2(self.hero.position) - Vector2(self.position)
-            Vector2.scale_to_length(self.velocity, 8)
+        if self.enemy_type == "Cacodemon":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon4.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon5.png")]
 
         self.game_area = game_area
         self.current_sprite = 0
@@ -46,7 +47,7 @@ class Enemy(pygame.sprite.Sprite):
         self.position = self.rect.center
         self.is_moving = True
 
-    def update(self):
+    def update(self, hero):
         if self.is_moving:
             self.position += self.velocity
             self.rect.center = self.position
@@ -58,6 +59,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if not self.game_area.contains(self.rect):
             self.kill()
+
         self.velocity = Vector2(self.hero.position) - Vector2(self.position)
         if self.enemy_type == "Mushroom":
             Vector2.scale_to_length(self.velocity, 1)
@@ -65,3 +67,12 @@ class Enemy(pygame.sprite.Sprite):
             Vector2.scale_to_length(self.velocity, 2)
         if self.enemy_type == "Hydra":
             Vector2.scale_to_length(self.velocity, 2)
+        if self.enemy_type == "Cacodemon":
+            Vector2.scale_to_length(self.velocity, 2)
+
+
+        if self.enemy_type == "Cacodemon":
+            if random.randint(1, 100) > 99:
+                self.velocity.scale_to_length(0)
+                # self.fired_time = pygame.time.get_ticks()
+                gamestate.all_sprites.add(projectile.Projectile(self.rect.center, gamestate.game_area, hero, "enemy"))

@@ -34,7 +34,7 @@ def hero_check_input(hero):
                 or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate or hero.is_dead:
             return
         else:
-            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, hero))
+            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, hero, "hero"))
             hero.projectile_count += 1
             hero.projectile_fired_time = pygame.time.get_ticks()
 

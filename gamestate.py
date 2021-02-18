@@ -105,7 +105,7 @@ class Gamestate:
                 obj.update(all_sprites)
             if isinstance(obj, projectile.Projectile):
                 obj.update()
-                obj.hit(all_sprites)
+                obj.hit(all_sprites, self)
 
         for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):
             self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
@@ -134,9 +134,9 @@ class Gamestate:
                 obj.update()
             if isinstance(obj, projectile.Projectile):
                 obj.update()
-                obj.hit(all_sprites)
+                obj.hit(all_sprites, self)
             if isinstance(obj, enemy.Enemy):
-                obj.update()
+                obj.update(self.hero)
             if isinstance(obj, hero.Hero):
                 obj.hit(all_sprites, self)
                 obj.update(all_sprites)

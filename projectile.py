@@ -1,17 +1,25 @@
 import pygame
 import enemy
+import hero
 from pygame.math import Vector2
 
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, mouse_position, game_area, hero):
+    def __init__(self, mouse_or_enemy_position, game_area, hero, type):
         super().__init__()
         self.position = Vector2()
         self.velocity = Vector2()
         self.acceleration = Vector2()
-        self.position = hero.position
-        self.velocity = Vector2(mouse_position) - (Vector2(hero.position) + Vector2(hero.camera))
-        Vector2.scale_to_length(self.velocity, 4)
+
+        self.type = type
+        if self.type == "hero":
+            self.position = hero.position
+            self.velocity = Vector2(mouse_or_enemy_position) - (Vector2(hero.position) + Vector2(hero.camera))
+            Vector2.scale_to_length(self.velocity, 4)
+        elif self.type == "enemy":
+            self.position = mouse_or_enemy_position
+            self.velocity = (Vector2(hero.position) - Vector2(mouse_or_enemy_position))
+            Vector2.scale_to_length(self.velocity, 5)
         # self.acceleration =
 
         self.assetAnimation = [pygame.image.load("Assets/Sprites/Projectiles/Projectile1.png"),
@@ -36,20 +44,32 @@ class Projectile(pygame.sprite.Sprite):
             self.current_sprite = 0
         self.image = self.assetAnimation[int(self.current_sprite)]
 
-        if not self.game_area.contains(self.rect):
-            self.kill()
-            self.character.projectile_count -= 1
+        if self.type == "hero":
+            if not self.game_area.contains(self.rect):
+                self.kill()
+                self.character.projectile_count -= 1
 
-        if pygame.time.get_ticks() - self.projectile_fired_time > self.projectile_live_time:
-            self.kill()
-            self.character.projectile_count -= 1
+            if pygame.time.get_ticks() - self.projectile_fired_time > self.projectile_live_time:
+                self.kill()
+                self.character.projectile_count -= 1
 
-    def hit(self, all_sprites):
+        if self.type == "enemy":
+            if pygame.time.get_ticks() - self.projectile_fired_time > self.projectile_live_time:
+                self.kill()
+
+    def hit(self, all_sprites, game_state):
 
         for obj in all_sprites:
             if isinstance(obj, enemy.Enemy):
-                if self.rect.colliderect(obj.rect):
-                    all_sprites.remove(obj)
-                    obj.kill()
-                    self.kill()
-                    self.character.projectile_count -= 1
+                if self.type == "hero":
+                    if self.rect.colliderect(obj.rect):
+                        all_sprites.remove(obj)
+                        obj.kill()
+                        self.kill()
+                        self.character.projectile_count -=1
+            if isinstance(obj, hero.Hero):
+                if self.type == "enemy":
+                    if self.rect.colliderect(obj.rect):
+                        if not obj.is_dead:
+                            obj.death(game_state)
+

@@ -15,6 +15,7 @@ class ForestLevel:
             all_sprites.add(enemy.Enemy(hero, game_area, "Mushroom"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Skeletor"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Hydra"))
+            all_sprites.add(enemy.Enemy(hero, game_area, "Cacodemon"))
 
         # forest flora
         self.bonzai_tree1 = flora.Flora("Bonzai")
