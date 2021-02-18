@@ -1,5 +1,6 @@
 import pygame
 import enemy
+import random
 import hero
 from pygame.math import Vector2
 
@@ -18,7 +19,7 @@ class Projectile(pygame.sprite.Sprite):
             Vector2.scale_to_length(self.velocity, 4)
         elif self.type == "enemy":
             self.position = mouse_or_enemy_position
-            self.velocity = (Vector2(hero.position) - Vector2(mouse_or_enemy_position))
+            self.velocity = (Vector2(hero.position) + Vector2(random.randint(5, 100), random.randint(5, 100)) - Vector2(mouse_or_enemy_position))
             Vector2.scale_to_length(self.velocity, 5)
         # self.acceleration =
 
