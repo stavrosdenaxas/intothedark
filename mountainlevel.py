@@ -3,20 +3,17 @@ import enemy
 import flora
 
 
-class ForestLevel:
+class MountainLevel:
     def __init__(self, all_sprites, hero, game_area):
         # forest floor
-        self.tileset = pygame.image.load("Assets/Sprites/Ground/ForestFloor.png").convert()
+        self.tileset = pygame.image.load("Assets/Sprites/Ground/MountainFloor.png").convert()
         for x in range(5):
             all_sprites.add(flora.Flora("Tree1"))
             all_sprites.add(flora.Flora("Tree2"))
         # forest enemies
-        for x in range(10):
-            all_sprites.add(enemy.Enemy(hero, game_area, "Mushroom"))
-            all_sprites.add(enemy.Enemy(hero, game_area, "Invulnro"))
+        for x in range(20):
+            all_sprites.add(enemy.Enemy(hero, game_area, "Hydra"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Cacodemon"))
-            all_sprites.add(enemy.Enemy(hero, game_area, "Tetro"))
-
 
         # forest flora
         self.bonzai_tree1 = flora.Flora("Bonzai")

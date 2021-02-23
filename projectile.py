@@ -64,10 +64,16 @@ class Projectile(pygame.sprite.Sprite):
             if isinstance(obj, enemy.Enemy):
                 if self.type == "hero":
                     if self.rect.colliderect(obj.rect):
-                        all_sprites.remove(obj)
-                        obj.kill()
-                        self.kill()
-                        self.character.projectile_count -=1
+
+                        if obj.enemy_type == "Invulnro":
+                            print("nice try")
+                            self.kill()
+                            self.character.projectile_count -=1
+                        else:
+                            all_sprites.remove(obj)
+                            obj.kill()
+                            self.kill()
+                            self.character.projectile_count -=1
             if isinstance(obj, hero.Hero):
                 if self.type == "enemy":
                     if self.rect.colliderect(obj.rect):

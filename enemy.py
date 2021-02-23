@@ -14,10 +14,10 @@ class Enemy(pygame.sprite.Sprite):
         self.velocity = Vector2()
         self.acceleration = Vector2()
         if self.enemy_type == "Mushroom":
-            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Enemy1.png"),
-                                   pygame.image.load("Assets/Sprites/Enemies/Enemy2.png"),
-                                   pygame.image.load("Assets/Sprites/Enemies/Enemy3.png"),
-                                   pygame.image.load("Assets/Sprites/Enemies/Enemy4.png")]
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Shroom/Enemy1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Shroom/Enemy2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Shroom/Enemy3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Shroom/Enemy4.png")]
         if self.enemy_type == "Skeletor":
             self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor1.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/skeletor/skeletor2.png"),
@@ -35,6 +35,19 @@ class Enemy(pygame.sprite.Sprite):
                                    pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon3.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon4.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Cacodemon/cacodemon5.png")]
+        if self.enemy_type == "Invulnro":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/invulnro/invulnro1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/invulnro/invulnro2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/invulnro/invulnro3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/invulnro/invulnro4.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/invulnro/invulnro5.png")]
+        if self.enemy_type == "Tetro":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro1.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro2.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro3.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro4.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro5.png"),
+                                   pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro6.png")]
 
         self.game_area = game_area
         self.current_sprite = 0
@@ -56,7 +69,6 @@ class Enemy(pygame.sprite.Sprite):
                 self.current_sprite = 0
             self.image = self.assetAnimation[int(self.current_sprite)]
 
-
         if not self.game_area.contains(self.rect):
             self.kill()
 
@@ -69,7 +81,10 @@ class Enemy(pygame.sprite.Sprite):
             Vector2.scale_to_length(self.velocity, 2)
         if self.enemy_type == "Cacodemon":
             Vector2.scale_to_length(self.velocity, 2)
-
+        if self.enemy_type == "Invulnro":
+            Vector2.scale_to_length(self.velocity, 1)
+        if self.enemy_type == "Tetro":
+            Vector2.scale_to_length(self.velocity, 4)
 
         if self.enemy_type == "Cacodemon":
             if random.randint(1, 100) > 99:

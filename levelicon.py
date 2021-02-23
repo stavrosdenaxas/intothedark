@@ -36,7 +36,12 @@ class LevelIcon(pygame.sprite.Sprite):
             for obj in all_sprites:
                 if isinstance(obj, hero.Hero):
                     if self.rect.colliderect(obj.rect):
-                        # enter level if collide
-                        game_state.state = "main_game"
-                        # game_state.level = self.level_type
-                        game_state.level = "Forest"
+                        if self.level_type == "Forest":
+                            game_state.state = "main_game"
+                            game_state.level = "Forest"
+                        if self.level_type == "Mountain":
+                            game_state.state = "main_game"
+                            game_state.level = "Mountain"
+                        if self.level_type == "Swamp":
+                            game_state.state = "main_game"
+                            game_state.level = "Swamp"

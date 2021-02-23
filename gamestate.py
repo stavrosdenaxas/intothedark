@@ -8,6 +8,8 @@ import flora
 import projectile
 import inputcapture
 import forestlevel
+import mountainlevel
+import swamplevel
 import levelicon
 
 # set screen resolution variables, this should be customisable in future
@@ -40,6 +42,8 @@ class Gamestate:
         # add all sprites to the group
         all_sprites.add(self.hero)
         self.forest_level = None
+        self.mountain_level = None
+        self.swamp_level = None
 
     # method called when in title screen to render
     def title_screen(self):
@@ -113,6 +117,12 @@ class Gamestate:
         if self.level == "Forest":
             all_sprites.empty()
             self.forest_level = forestlevel.ForestLevel(all_sprites, self.hero, game_area)
+        if self.level == "Mountain":
+            all_sprites.empty()
+            self.mountain_level = mountainlevel.MountainLevel(all_sprites, self.hero, game_area)
+        if self.level == "Swamp":
+            all_sprites.empty()
+            self.swamp_level = swamplevel.SwampLevel(all_sprites, self.hero, game_area)
 
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
@@ -127,6 +137,10 @@ class Gamestate:
 
         if self.level == "Forest":
             self.forest_level.draw(self.screen, self.hero.camera)
+        if self.level == "Mountain":
+            self.mountain_level.draw(self.screen, self.hero.camera)
+        if self.level == "Swamp":
+            self.swamp_level.draw(self.screen, self.hero.camera)
 
         # move or animate our test sprites
         for obj in all_sprites:
