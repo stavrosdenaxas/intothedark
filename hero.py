@@ -104,6 +104,7 @@ class Hero(pygame.sprite.Sprite):
                 if isinstance(obj, enemy.Enemy):
                     if self.rect.colliderect(obj.rect):
                         self.death(gamestate)
+                # add key collide here and call add_item if added
 
     def death(self, gamestate):
         self.is_dead = True
