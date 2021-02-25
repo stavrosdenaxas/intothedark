@@ -93,7 +93,7 @@ class Hero(pygame.sprite.Sprite):
                 self.current_sprite = 4
             self.image = self.deathAnimation[int(self.current_sprite)]
 
-        self.position = self.rect.center
+        # self.position = self.rect.center
 
     # placeholder method for inventory
     def add_item(self, obj):
