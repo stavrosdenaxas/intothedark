@@ -17,6 +17,7 @@ import levelicon
 screen_width = 1920
 screen_height = 1080
 all_sprites = pygame.sprite.Group()
+lobby_sprites = pygame.sprite.Group()
 ui_sprites = pygame.sprite.Group()
 game_area = pygame.Rect(0, 0, screen_width * 4, screen_height * 4)
 
@@ -24,6 +25,8 @@ game_area = pygame.Rect(0, 0, screen_width * 4, screen_height * 4)
 class Gamestate:
     def __init__(self, state):
         all_sprites.empty()
+        ui_sprites.empty()
+        lobby_sprites.empty()
         self.state = state
         self.camera = Vector2(0, 0)
         self.screen = pygame.display.set_mode([screen_width, screen_height])
@@ -36,13 +39,20 @@ class Gamestate:
         self.DIAGNOSTICS_FONT = pygame.freetype.Font("Assets/Fonts/Oswald-Bold.ttf", 12)
         # create a sprite group to hold all sprites
 
+        self.forest_level_icon = levelicon.LevelIcon(1500, 1200, "Forest")
+        self.swamp_level_icon = levelicon.LevelIcon(1300, 1200, "Swamp")
+        self.mountain_level_icon = levelicon.LevelIcon(1100, 1200, "Mountain")
+        lobby_sprites.add(self.forest_level_icon)
+        lobby_sprites.add(self.swamp_level_icon)
+        lobby_sprites.add(self.mountain_level_icon)
+
         # create our first game objects/sprites as a test
         self.hero = hero.Hero(screen_width, screen_height)
         self.hero.is_moving = False
         self.hero.is_dead = False
         self.time_of_death = 100000000000000000
         # add all sprites to the group
-        all_sprites.add(self.hero)
+        lobby_sprites.add(self.hero)
         self.forest_level = None
         self.mountain_level = None
         self.swamp_level = None
@@ -99,22 +109,24 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
 
         inputcapture.next_screen_check_input(self)
-        inputcapture.hero_check_input(self.hero)
+        inputcapture.hero_check_input(self)
         # forest flora
 
-        for obj in all_sprites:
+        for obj in lobby_sprites:
             if isinstance(obj, levelicon.LevelIcon):
                 obj.update()
-                obj.hit(all_sprites, self)
+                obj.hit(lobby_sprites, self)
             if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites,ui_sprites, self)
-                obj.update(all_sprites)
+                obj.hit(lobby_sprites, ui_sprites, lobby_sprites, self)
+                obj.update(lobby_sprites)
             if isinstance(obj, projectile.Projectile):
                 obj.update()
-                obj.hit(all_sprites, self)
+                obj.hit(lobby_sprites, self)
 
-        for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):
+        for sprite in sorted(lobby_sprites, key=lambda spr: spr.rect.bottom):
             self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
+        for sprite in sorted(ui_sprites, key=lambda spr: spr.rect.bottom):
+            self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y))
 
         if self.level == "Forest":
             all_sprites.empty()
@@ -135,7 +147,7 @@ class Gamestate:
         self.screen.fill((0, 0, 0))
         inputcapture.next_screen_check_input(self)
         # check character input
-        inputcapture.hero_check_input(self.hero)
+        inputcapture.hero_check_input(self)
 
         if self.level == "Forest":
             self.forest_level.draw(self.screen, self.hero.camera)
@@ -154,7 +166,7 @@ class Gamestate:
             if isinstance(obj, enemy.Enemy):
                 obj.update(self.hero)
             if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites,ui_sprites, self)
+                obj.hit(all_sprites, ui_sprites, lobby_sprites, self)
                 obj.update(all_sprites)
             if isinstance(obj, item.Item):
                 obj.update()

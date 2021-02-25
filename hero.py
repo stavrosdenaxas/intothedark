@@ -3,6 +3,7 @@ import enemy
 import flora
 import item
 import gamestate
+import portal
 from pygame.math import Vector2
 
 
@@ -99,7 +100,7 @@ class Hero(pygame.sprite.Sprite):
         self.inventory.append(obj)
         print("added item")
 
-    def hit(self, all_sprites, ui_sprites, game_state):
+    def hit(self, all_sprites, ui_sprites, lobby_sprites, game_state):
 
         if not self.is_dead:
             for obj in all_sprites:
@@ -110,6 +111,22 @@ class Hero(pygame.sprite.Sprite):
                     if self.rect.colliderect(obj.rect):
                         obj.kill()
                         ui_sprites.add(item.Item(gamestate.game_area, 1800, 20))
+                if isinstance(obj, portal.Portal):
+                    if self.rect.colliderect(obj.rect):
+                        all_sprites.empty()
+                        lobby_sprites.add(self)
+                        self.rect.x = gamestate.screen_width
+                        self.rect.y = gamestate.screen_height
+                        self.camera = Vector2(- gamestate.screen_width/2, - gamestate.screen_height/2)
+                        if game_state.level == "Forest":
+                            game_state.forest_level_icon.level_complete = True
+                        if game_state.level == "Mountain":
+                            game_state.mountain_level_icon.level_complete = True
+                        if game_state.level == "Swamp":
+                            game_state.swamp_level_icon.level_complete = True
+                        game_state.level = None
+                        game_state.state = 'game_lobby'
+
 
     def death(self, gamestate):
         self.is_dead = True

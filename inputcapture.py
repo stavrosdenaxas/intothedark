@@ -2,10 +2,9 @@ import pygame
 from pygame.math import Vector2
 import gamestate
 import projectile
-import levelicon
 
 
-def hero_check_input(hero):
+def hero_check_input(game_state):
     move = Vector2(0, 0)
     event = pygame.key.get_pressed()
 
@@ -21,22 +20,26 @@ def hero_check_input(hero):
     if move.length() > 0:
         move.normalize_ip()
         move.scale_to_length(3.0)
-        hero.is_moving = True
+        game_state.hero.is_moving = True
     else:
-        hero.is_moving = False
+        game_state.hero.is_moving = False
 
-    hero.velocity = move
+    game_state.hero.velocity = move
     # if pygame.mouse.get_pressed(3)[2]:
     #   character.mouse_position = pygame.mouse.get_pos()
     #   character.is_moving = True
     if pygame.mouse.get_pressed(3)[0]:
-        if hero.projectile_count >= 55\
-                or pygame.time.get_ticks() - hero.projectile_fired_time < hero.fire_rate or hero.is_dead:
+        if game_state.hero.projectile_count >= 55\
+                or pygame.time.get_ticks() - game_state.hero.projectile_fired_time < game_state.hero.fire_rate or game_state.hero.is_dead:
             return
         else:
-            gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, hero, "hero"))
-            hero.projectile_count += 1
-            hero.projectile_fired_time = pygame.time.get_ticks()
+            if game_state.state == 'game_lobby':
+                gamestate.lobby_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, game_state.hero, "hero"))
+                game_state.hero.projectile_fired_time = pygame.time.get_ticks()
+            if game_state.state == 'main_game':
+                gamestate.all_sprites.add(projectile.Projectile(pygame.mouse.get_pos(), gamestate.game_area, game_state.hero, "hero"))
+                game_state.hero.projectile_count += 1
+                game_state.hero.projectile_fired_time = pygame.time.get_ticks()
 
 
 # checks to see if any key is pressed to switch between title, menu and game screens. Should be changed to change on
@@ -47,12 +50,6 @@ def next_screen_check_input(gamest):
             if gamest.state == 'title_screen':
                 gamest.state = 'main_menu'
             elif gamest.state == 'main_menu':
-                forest_level_icon = levelicon.LevelIcon(1500, 1500, "Forest")
-                swamp_level_icon = levelicon.LevelIcon(1500, 1200, "Swamp")
-                mountain_level_icon = levelicon.LevelIcon(1500, 900, "Mountain")
-                gamestate.all_sprites.add(forest_level_icon)
-                gamestate.all_sprites.add(swamp_level_icon)
-                gamestate.all_sprites.add(mountain_level_icon)
                 gamest.state = 'game_lobby'
             # elif gamest.state == 'game_lobby':
             #    gamest.state = 'main_game'

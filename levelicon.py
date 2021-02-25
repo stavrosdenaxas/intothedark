@@ -7,7 +7,7 @@ class LevelIcon(pygame.sprite.Sprite):
     def __init__(self, x, y, level_type):
         super().__init__()
         if level_type == "Forest":
-            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Bonzai1.png")]
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Forest.png")]
         if level_type == "Mountain":
             self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Rock.png")]
         if level_type == "Swamp":
@@ -27,21 +27,32 @@ class LevelIcon(pygame.sprite.Sprite):
         self.is_moving = False
         self.is_dead = False
         self.level_type = level_type
+        self.level_complete = False
 
     def update(self):
         self.rect.center = self.position
+        if self.level_complete:
+            if self.level_type == "Forest":
+                print("triggered forest is complete change sprite")
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/ForestComplete.png")]
+            if self.level_type == "Mountain":
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/RockComplete.png")]
+            if self.level_type == "Swamp":
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/SwampComplete.png")]
+            self.image = self.assetAnimation[self.current_sprite]
 
     def hit(self, all_sprites, game_state):
         if not self.is_dead:
             for obj in all_sprites:
                 if isinstance(obj, hero.Hero):
                     if self.rect.colliderect(obj.rect):
-                        if self.level_type == "Forest":
-                            game_state.state = "main_game"
-                            game_state.level = "Forest"
-                        if self.level_type == "Mountain":
-                            game_state.state = "main_game"
-                            game_state.level = "Mountain"
-                        if self.level_type == "Swamp":
-                            game_state.state = "main_game"
-                            game_state.level = "Swamp"
+                        if not self.level_complete:
+                            if self.level_type == "Forest":
+                                game_state.state = "main_game"
+                                game_state.level = "Forest"
+                            if self.level_type == "Mountain":
+                                game_state.state = "main_game"
+                                game_state.level = "Mountain"
+                            if self.level_type == "Swamp":
+                                game_state.state = "main_game"
+                                game_state.level = "Swamp"
