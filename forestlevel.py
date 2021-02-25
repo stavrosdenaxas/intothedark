@@ -1,6 +1,7 @@
 import pygame
 import enemy
 import flora
+import item
 
 
 class ForestLevel:
@@ -10,6 +11,8 @@ class ForestLevel:
         for x in range(5):
             all_sprites.add(flora.Flora("Tree1"))
             all_sprites.add(flora.Flora("Tree2"))
+
+        all_sprites.add(item.Item(game_area, 150, 150))
         # forest enemies
         for x in range(10):
             all_sprites.add(enemy.Enemy(hero, game_area, "Mushroom"))

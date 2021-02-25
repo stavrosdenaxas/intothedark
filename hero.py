@@ -1,6 +1,8 @@
 import pygame
 import enemy
 import flora
+import item
+import gamestate
 from pygame.math import Vector2
 
 
@@ -93,18 +95,21 @@ class Hero(pygame.sprite.Sprite):
         self.position = self.rect.center
 
     # placeholder method for inventory
-    def add_item(self, item):
-        self.inventory[0] = item
-        return "placeholder"
+    def add_item(self, obj):
+        self.inventory.append(obj)
+        print("added item")
 
-    def hit(self, all_sprites, gamestate):
+    def hit(self, all_sprites, ui_sprites, game_state):
 
         if not self.is_dead:
             for obj in all_sprites:
                 if isinstance(obj, enemy.Enemy):
                     if self.rect.colliderect(obj.rect):
-                        self.death(gamestate)
-                # add key collide here and call add_item if added
+                        self.death(game_state)
+                if isinstance(obj, item.Item):
+                    if self.rect.colliderect(obj.rect):
+                        obj.kill()
+                        ui_sprites.add(item.Item(gamestate.game_area, 1800, 20))
 
     def death(self, gamestate):
         self.is_dead = True

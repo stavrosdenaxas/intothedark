@@ -5,6 +5,7 @@ from pygame.math import Vector2
 import hero
 import enemy
 import flora
+import item
 import projectile
 import inputcapture
 import forestlevel
@@ -16,6 +17,7 @@ import levelicon
 screen_width = 1920
 screen_height = 1080
 all_sprites = pygame.sprite.Group()
+ui_sprites = pygame.sprite.Group()
 game_area = pygame.Rect(0, 0, screen_width * 4, screen_height * 4)
 
 
@@ -105,7 +107,7 @@ class Gamestate:
                 obj.update()
                 obj.hit(all_sprites, self)
             if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites, self)
+                obj.hit(all_sprites,ui_sprites, self)
                 obj.update(all_sprites)
             if isinstance(obj, projectile.Projectile):
                 obj.update()
@@ -152,12 +154,16 @@ class Gamestate:
             if isinstance(obj, enemy.Enemy):
                 obj.update(self.hero)
             if isinstance(obj, hero.Hero):
-                obj.hit(all_sprites, self)
+                obj.hit(all_sprites,ui_sprites, self)
                 obj.update(all_sprites)
+            if isinstance(obj, item.Item):
+                obj.update()
 
         # draw all sprites sorted by y
         for sprite in sorted(all_sprites, key=lambda spr: spr.rect.bottom):
             self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y) + self.hero.camera)
+        for sprite in sorted(ui_sprites, key=lambda spr: spr.rect.bottom):
+            self.screen.blit(sprite.image, Vector2(sprite.rect.x, sprite.rect.y))
 
         # self.DIAGNOSTICS_FONT.render_to(self.screen, (10,30), "FPS:" + str(round(clock.get_fps())),(150, 150, 150))
         # Flip the display ( update the display)
