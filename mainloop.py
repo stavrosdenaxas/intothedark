@@ -19,6 +19,8 @@ def determine_state():
         game_state.game_lobby(clock)
     if game_state.state == 'main_game':
         game_state.main_game(clock)
+    if game_state.state == 'credit_screen':
+        game_state.credits_screen(clock)
 
 
 def game_restart_check():

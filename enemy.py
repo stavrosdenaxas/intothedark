@@ -48,10 +48,16 @@ class Enemy(pygame.sprite.Sprite):
                                    pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro4.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro5.png"),
                                    pygame.image.load("Assets/Sprites/Enemies/Tetro/Tetro6.png")]
+        if self.enemy_type == "Mergamoth":
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Mergamoth/mergamoth1.png"),
+                                   pygame.image.load("Assets/Sprites/Mergamoth/mergamoth2.png"),
+                                   pygame.image.load("Assets/Sprites/Mergamoth/mergamoth3.png"),
+                                   pygame.image.load("Assets/Sprites/Mergamoth/mergamoth4.png"),
+                                   pygame.image.load("Assets/Sprites/Mergamoth/mergamoth5.png")]
 
         self.game_area = game_area
         self.current_sprite = 0
-        self.scale_factor = 0.5
+        self.scale_factor = 1
         self.mouse_position = [random.randint(100, 500), random.randint(100, 500)]
         self.image = self.assetAnimation[self.current_sprite]
         self.rect = self.image.get_rect()
@@ -69,8 +75,8 @@ class Enemy(pygame.sprite.Sprite):
                 self.current_sprite = 0
             self.image = self.assetAnimation[int(self.current_sprite)]
 
-        if not self.game_area.contains(self.rect):
-            self.kill()
+        # if not self.game_area.contains(self.rect):
+        #    self.kill()
 
         self.velocity = Vector2(self.hero.position) - Vector2(self.position)
         if self.enemy_type == "Mushroom":
@@ -85,9 +91,15 @@ class Enemy(pygame.sprite.Sprite):
             Vector2.scale_to_length(self.velocity, 1)
         if self.enemy_type == "Tetro":
             Vector2.scale_to_length(self.velocity, 4)
+        if self.enemy_type == "Mergamoth":
+            Vector2.scale_to_length(self.velocity, self.scale_factor)
 
-        if self.enemy_type == "Cacodemon":
+        if self.enemy_type == "Cacodemon" or self.enemy_type == "Mergamoth":
             if random.randint(1, 100) > 99:
                 self.velocity.scale_to_length(0)
                 # self.fired_time = pygame.time.get_ticks()
                 gamestate.all_sprites.add(projectile.Projectile(self.rect.center, gamestate.game_area, hero, "enemy"))
+
+    def scale_enemy(self):
+        self.image = pygame.transform.scale(self.image, (round(256 / self.scale_factor), round(256 / self.scale_factor)))
+        self.rect = self.image.get_rect()

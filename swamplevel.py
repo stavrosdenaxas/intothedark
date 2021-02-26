@@ -16,9 +16,9 @@ class SwampLevel:
             all_sprites.add(enemy.Enemy(hero, game_area, "Skeletor"))
             all_sprites.add(enemy.Enemy(hero, game_area, "Cacodemon"))
 
-            all_sprites.add(hero)
-            all_sprites.add(item.Item(game_area, 150, 150))
-            all_sprites.add(portal.Portal(game_area, 350, 350))
+        all_sprites.add(hero)
+        all_sprites.add(item.Item(game_area, 150, 150))
+        all_sprites.add(portal.Portal(game_area, 350, 350))
         # forest flora
         self.bonzai_tree1 = flora.Flora("Bonzai")
 

@@ -13,7 +13,7 @@ class LevelIcon(pygame.sprite.Sprite):
         if level_type == "Swamp":
             self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Swamp.png")]
         if level_type == "Mergamoth":
-            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Swamp.png")]
+            self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/Door.png")]
         self.position = Vector2()
         self.velocity = Vector2(0, 0)
         self.acceleration = Vector2()
@@ -31,15 +31,6 @@ class LevelIcon(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.center = self.position
-        if self.level_complete:
-            if self.level_type == "Forest":
-                print("triggered forest is complete change sprite")
-                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/ForestComplete.png")]
-            if self.level_type == "Mountain":
-                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/RockComplete.png")]
-            if self.level_type == "Swamp":
-                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/SwampComplete.png")]
-            self.image = self.assetAnimation[self.current_sprite]
 
     def hit(self, all_sprites, game_state):
         if not self.is_dead:
@@ -56,3 +47,17 @@ class LevelIcon(pygame.sprite.Sprite):
                             if self.level_type == "Swamp":
                                 game_state.state = "main_game"
                                 game_state.level = "Swamp"
+                            if self.level_type == "Mergamoth" and len(obj.inventory) >= 0:
+                                game_state.state = "main_game"
+                                game_state.level = "Mergamoth"
+
+    def complete_level(self):
+        if self.level_complete:
+            if self.level_type == "Forest":
+                print("triggered forest is complete change sprite")
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/ForestComplete.png")]
+            if self.level_type == "Mountain":
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/RockComplete.png")]
+            if self.level_type == "Swamp":
+                self.assetAnimation = [pygame.image.load("Assets/Sprites/Flora/SwampComplete.png")]
+            self.image = self.assetAnimation[self.current_sprite]

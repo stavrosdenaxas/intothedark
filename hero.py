@@ -39,7 +39,7 @@ class Hero(pygame.sprite.Sprite):
         self.projectile_count = 0
         self.fire_rate = 100
         self.projectile_fired_time = pygame.time.get_ticks()
-        self.inventory = [1]
+        self.inventory = []
         self.is_moving = False
         self.is_dead = False
         self.camera = Vector2(-screen_width/2, - screen_height/2)
@@ -109,8 +109,10 @@ class Hero(pygame.sprite.Sprite):
                         self.death(game_state)
                 if isinstance(obj, item.Item):
                     if self.rect.colliderect(obj.rect):
+                        self.inventory.append(obj)
+                        ui_sprites.add(item.Item(gamestate.game_area, 1800 - 20 * (len(self.inventory) + 1), 20 ))
                         obj.kill()
-                        ui_sprites.add(item.Item(gamestate.game_area, 1800, 20))
+
                 if isinstance(obj, portal.Portal):
                     if self.rect.colliderect(obj.rect):
                         all_sprites.empty()
@@ -120,12 +122,16 @@ class Hero(pygame.sprite.Sprite):
                         self.camera = Vector2(- gamestate.screen_width/2, - gamestate.screen_height/2)
                         if game_state.level == "Forest":
                             game_state.forest_level_icon.level_complete = True
+                            game_state.forest_level_icon.complete_level()
                         if game_state.level == "Mountain":
                             game_state.mountain_level_icon.level_complete = True
+                            game_state.mountain_level_icon.complete_level()
                         if game_state.level == "Swamp":
                             game_state.swamp_level_icon.level_complete = True
+                            game_state.swamp_level_icon.complete_level()
                         game_state.level = None
                         game_state.state = 'game_lobby'
+                        self.projectile_count = 0
 
 
     def death(self, gamestate):

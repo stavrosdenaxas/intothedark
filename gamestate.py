@@ -11,6 +11,7 @@ import inputcapture
 import forestlevel
 import mountainlevel
 import swamplevel
+import mergamothlevel
 import levelicon
 
 # set screen resolution variables, this should be customisable in future
@@ -42,10 +43,11 @@ class Gamestate:
         self.forest_level_icon = levelicon.LevelIcon(1500, 1200, "Forest")
         self.swamp_level_icon = levelicon.LevelIcon(1300, 1200, "Swamp")
         self.mountain_level_icon = levelicon.LevelIcon(1100, 1200, "Mountain")
+        self.mergamoth_level_icon = levelicon.LevelIcon(1300, 800, "Mergamoth")
         lobby_sprites.add(self.forest_level_icon)
         lobby_sprites.add(self.swamp_level_icon)
         lobby_sprites.add(self.mountain_level_icon)
-
+        lobby_sprites.add(self.mergamoth_level_icon)
         # create our first game objects/sprites as a test
         self.hero = hero.Hero(screen_width, screen_height)
         self.hero.is_moving = False
@@ -56,6 +58,7 @@ class Gamestate:
         self.forest_level = None
         self.mountain_level = None
         self.swamp_level = None
+        self.mergamoth_level = None
 
     # method called when in title screen to render
     def title_screen(self):
@@ -137,6 +140,9 @@ class Gamestate:
         if self.level == "Swamp":
             all_sprites.empty()
             self.swamp_level = swamplevel.SwampLevel(all_sprites, self.hero, game_area)
+        if self.level == "Mergamoth":
+            all_sprites.empty()
+            self.mergamoth_level = mergamothlevel.MergamothLevel(all_sprites, self.hero, game_area)
 
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
@@ -155,6 +161,8 @@ class Gamestate:
             self.mountain_level.draw(self.screen, self.hero.camera)
         if self.level == "Swamp":
             self.swamp_level.draw(self.screen, self.hero.camera)
+        if self.level == "Mergamoth":
+            self.mergamoth_level.draw(self.screen, self.hero.camera)
 
         # move or animate our test sprites
         for obj in all_sprites:
@@ -183,3 +191,12 @@ class Gamestate:
         self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
         # self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "Len:" + str(len(all_level_sprites)), (150, 150, 150))
         pygame.display.flip()
+
+    def credits_screen(self, clock):
+        self.MENU_FONT.render_to(self.screen,
+                                 (round(screen_width / 2 - 0.2 * screen_width),
+                                  round(screen_height * 0.4 - 0.1 * screen_width)),
+                                 "Stavros made this flaming pile of garbage",
+                                 (100, 100, 100))
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 10), "FPS:" + str(round(clock.get_fps())), (150, 150, 150))
+        self.DIAGNOSTICS_FONT.render_to(self.screen, (10, 30), "Len:" + str(len(all_sprites)), (150, 150, 150))
